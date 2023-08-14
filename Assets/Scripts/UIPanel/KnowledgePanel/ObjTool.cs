@@ -18,7 +18,6 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField] List<Toggle> principleItems;
 		private void Awake()
 		{
-			GameObject topMask = UIKit.GetPanel<TopPanel>().imgMask.gameObject;
 			CancellationToken token = this.GetCancellationTokenOnDestroy();
 
 			Func<bool> funcDescription = Settings.GetToggleAnimatorEndFunc(togDescription);
@@ -27,18 +26,18 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcDescription);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					descriptionGroup.gameObject.SetActive(true);
 					descriptionGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					descriptionGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					descriptionGroup.gameObject.SetActive(false);
 				}
 			});
@@ -49,18 +48,18 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					principleGroup.gameObject.SetActive(true);
 					principleGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					principleGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					principleGroup.gameObject.SetActive(false);
 				}
 
@@ -72,18 +71,18 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					ageGroup.gameObject.SetActive(true);
 					ageGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					ageGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					ageGroup.gameObject.SetActive(false);
 				}
 			});
@@ -94,18 +93,18 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					countryGroup.gameObject.SetActive(true);
 					countryGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					countryGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					countryGroup.gameObject.SetActive(false);
 				}
 			});
@@ -113,7 +112,7 @@ namespace ZGMSXY_MYCXGY
 			btnPlayEnd.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnPlayEnd, async () =>
 			 {
 				 imgPlayEnd.transform.DOLocalMoveY(1080, 0.5f);
-				 await UniTask.Delay(600);
+				 await UniTask.Delay(Settings.HideDelay);
 				 imgPlayEnd.gameObject.SetActive(false);
 			 }, token));
 
@@ -129,18 +128,18 @@ namespace ZGMSXY_MYCXGY
 					if (token.IsCancellationRequested) return;
 					if (isOn)
 					{
-						topMask.SetActive(true);
+						UIRoot.Instance.GraphicRaycaster.enabled = false;
 						await UniTask.WaitUntil(principleItemsFunc);
-						await UniTask.Delay(500);
+						await UniTask.Delay(Settings.HideDelay);
 						rect.DOSizeDelta(bigSize, 0.5f);
-						await UniTask.Delay(600);
-						topMask.SetActive(false);
+						await UniTask.Delay(Settings.ShowDelay);
+						UIRoot.Instance.GraphicRaycaster.enabled = true;
 						LayoutRebuilder.ForceRebuildLayoutImmediate(hlgPrinciple);
 					}
 					else
 					{
 						rect.DOSizeDelta(smallSize, 0.5f);
-						await UniTask.Delay(600);
+						await UniTask.Delay(Settings.ShowDelay);
 					}
 				});
 			}

@@ -1,0 +1,55 @@
+using System;
+using UnityEngine;
+using UnityEngine.UI;
+using QFramework;
+
+namespace ZGMSXY_MYCXGY
+{
+	// Generate Id:014f8b81-0e78-448b-b249-abe9251e3aa2
+	public partial class ReportPanel
+	{
+		public const string Name = "ReportPanel";
+		
+		[SerializeField]
+		public UnityEngine.UI.Button btnBack;
+		[SerializeField]
+		public UnityEngine.RectTransform svReport;
+		[SerializeField]
+		public UnityEngine.UI.InputField inputTestEvaluate;
+		[SerializeField]
+		public UnityEngine.UI.Button btnSubmit;
+		
+		private ReportPanelData mPrivateData = null;
+		
+		protected override void ClearUIComponents()
+		{
+			btnBack = null;
+			svReport = null;
+			inputTestEvaluate = null;
+			btnSubmit = null;
+			
+			mData = null;
+		}
+		
+		public ReportPanelData Data
+		{
+			get
+			{
+				return mData;
+			}
+		}
+		
+		ReportPanelData mData
+		{
+			get
+			{
+				return mPrivateData ?? (mPrivateData = new ReportPanelData());
+			}
+			set
+			{
+				mUIData = value;
+				mPrivateData = value;
+			}
+		}
+	}
+}

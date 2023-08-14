@@ -19,7 +19,6 @@ namespace ZGMSXY_MYCXGY
 		{
 			mData = uiData as LearnPanelData ?? new LearnPanelData();
 
-			GameObject topMask = UIKit.GetPanel<TopPanel>().imgMask.gameObject;
 			CancellationToken token = this.GetCancellationTokenOnDestroy();
 
 			Vector2 bigSize = new Vector2(240, 240);
@@ -34,34 +33,41 @@ namespace ZGMSXY_MYCXGY
 					if (token.IsCancellationRequested) return;
 					if (isOn)
 					{
-						topMask.SetActive(true);
+						UIRoot.Instance.GraphicRaycaster.enabled = false;
 						await UniTask.WaitUntil(principleItemsFunc);
-						await UniTask.Delay(500);
+						await UniTask.Delay(Settings.HideDelay);
 						rect.DOSizeDelta(bigSize, 0.5f);
-						await UniTask.Delay(600);
-						topMask.SetActive(false);
+						await UniTask.Delay(Settings.ShowDelay);
+						UIRoot.Instance.GraphicRaycaster.enabled = true;
 						LayoutRebuilder.ForceRebuildLayoutImmediate(hlgCraft);
 					}
 					else
 					{
 						rect.DOSizeDelta(smallSize, 0.5f);
-						await UniTask.Delay(600);
+						await UniTask.Delay(Settings.ShowDelay);
 					}
 				});
 			}
+
+			btnBack.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+			{
+				Hide();
+				await UniTask.Delay(Settings.HideDelay);
+				UIKit.ShowPanel<MainPanel>();
+			}, token));
 
 			btnConfirmCraft.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmCraft, async () =>
 			 {
 				 imgPlayEnd.gameObject.SetActive(true);
 				 imgPlayEnd.DOLocalMoveY(0, 0.5f);
-				 await UniTask.Delay(500);
+				 await UniTask.Delay(Settings.HideDelay);
 			 }, token));
 			
 			btnPlayEnd.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnPlayEnd, async () =>
 			{
 				imgPlayEnd.DOLocalMoveY(1080, 0.5f);
 				objCraft.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(600);
+				await UniTask.Delay(Settings.HideDelay);
 				titleGroup.gameObject.SetActive(true);
 				titleGroup.DOLocalMoveY(0, 0.5f);
 			}, token));
@@ -70,7 +76,7 @@ namespace ZGMSXY_MYCXGY
 			{
 				imgPlay.gameObject.SetActive(true);
 				imgPlay.DOLocalMoveY(0, 0.5f);
-				await UniTask.Delay(500);
+				await UniTask.Delay(Settings.HideDelay);
 			}, token));
 
 			btnConfirmPlay.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmPlay, async () =>
@@ -83,7 +89,7 @@ namespace ZGMSXY_MYCXGY
 			btnCancelPlay.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelPlay, async () =>
 			{
 				imgPlay.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(500);
+				await UniTask.Delay(Settings.HideDelay);
 				imgPlay.gameObject.SetActive(false);
 			}, token));
 		}
@@ -124,7 +130,7 @@ namespace ZGMSXY_MYCXGY
 		public override async void Hide()
 		{
 			transform.DOLocalMoveY(1080, 0.5f);
-			await UniTask.Delay(500);
+			await UniTask.Delay(Settings.HideDelay);
 			base.Hide();
 		}
 	}

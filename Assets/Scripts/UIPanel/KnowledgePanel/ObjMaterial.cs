@@ -23,7 +23,6 @@ namespace ZGMSXY_MYCXGY
 
 		private void Awake()
 		{
-			GameObject topMask = UIKit.GetPanel<TopPanel>().imgMask.gameObject;
 			CancellationToken token = this.GetCancellationTokenOnDestroy();
 			//togMap
 			Func<bool> funcMap = Settings.GetToggleAnimatorEndFunc(togMap);
@@ -32,19 +31,19 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcMap);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					materialGroup.gameObject.SetActive(true);
 					materialGroup.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					materialGroup.DOLocalMoveY(1080, 0.5f);
 					materialDescription.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.ShowDelay);
 					materialGroup.gameObject.SetActive(false);
 					materialDescription.gameObject.SetActive(false);
 				}
@@ -56,19 +55,19 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcEntity);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					entityGroup.gameObject.SetActive(true);
 					entityGroup.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					entityGroup.DOLocalMoveY(1080, 0.5f);
 					entityDescription.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.ShowDelay);
 					entityGroup.gameObject.SetActive(false);
 					entityDescription.gameObject.SetActive(false);
 				}
@@ -80,18 +79,18 @@ namespace ZGMSXY_MYCXGY
 				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					topMask.SetActive(true);
+					UIRoot.Instance.GraphicRaycaster.enabled = false;
 					await UniTask.WaitUntil(funcAnimation);
-					await UniTask.Delay(500);
+					await UniTask.Delay(Settings.HideDelay);
 					animationGroup.gameObject.SetActive(true);
 					animationGroup.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
-					topMask.SetActive(false);
+					await UniTask.Delay(Settings.ShowDelay);
+					UIRoot.Instance.GraphicRaycaster.enabled = true;
 				}
 				else
 				{
 					animationGroup.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					animationGroup.gameObject.SetActive(false);
 				}
 			});
@@ -104,7 +103,7 @@ namespace ZGMSXY_MYCXGY
 				{
 					materialDescription.gameObject.SetActive(true);
 					materialDescription.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.ShowDelay);
 					print(index);
 				},token));
 			}
@@ -113,7 +112,7 @@ namespace ZGMSXY_MYCXGY
 			btnCloseMaterialDescription.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCloseMaterialDescription,async()=>
 			{
 				materialDescription.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(600);
+				await UniTask.Delay(Settings.HideDelay);
 				materialDescription.gameObject.SetActive(false);
 			}, token));
 
@@ -125,14 +124,14 @@ namespace ZGMSXY_MYCXGY
 				{
 					entityDescription.gameObject.SetActive(true);
 					entityDescription.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(600);
+					await UniTask.Delay(Settings.HideDelay);
 					print(index);
 				},token));
 			}
 			btnCloseEntityDescription.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCloseEntityDescription, async () =>
 			 {
 				 entityDescription.DOLocalMoveY(0, 0.5f);
-				 await UniTask.Delay(600);
+				 await UniTask.Delay(Settings.HideDelay);
 				 entityDescription.gameObject.SetActive(false);
 			 }, token));
 		}

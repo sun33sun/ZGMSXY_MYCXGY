@@ -25,14 +25,16 @@ namespace ZGMSXY_MYCXGY
 		public static UnityAction GetButtonIgnoreClickFunc(Button btn, Func<UniTask> invoke, CancellationToken token)
 		{
 			Func<bool> func = GetButtonAnimatorEndFunc(btn);
-			GameObject topMask = UIKit.GetPanel<TopPanel>().imgMask.gameObject;
+
 			return async () =>
 			{
 				if (token.IsCancellationRequested) return;
+				UIRoot.Instance.GraphicRaycaster.enabled = false;
+				//topMask.gameObject.SetActive(true);
 				await UniTask.WaitUntil(func);
-				topMask.gameObject.SetActive(true);
 				await invoke();
-				topMask.gameObject.SetActive(false);
+				UIRoot.Instance.GraphicRaycaster.enabled = true;
+				//topMask.gameObject.SetActive(false);
 			};
 		}
 
@@ -41,5 +43,8 @@ namespace ZGMSXY_MYCXGY
 			Animator animator = tog.animator;
 			return () => animator.GetCurrentAnimatorStateInfo(0).IsName("Normal");
 		}
+
+		public const int ShowDelay = 550;
+		public const int HideDelay = 500;
 	}
 }
