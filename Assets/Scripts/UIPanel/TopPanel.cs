@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using UnityEngine.EventSystems;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -43,6 +44,19 @@ namespace ZGMSXY_MYCXGY
                 await UniTask.Delay(Settings.HideDelay);
                 imgHelp.gameObject.SetActive(false);
             }, token));
+
+            UIEventTool.AddEventTrigger(btnScreen.gameObject, EventTriggerType.PointerClick, data =>
+            {
+                Screen.fullScreen = !Screen.fullScreen;
+                if(Screen.fullScreen)
+                {
+                    btnScreen.GetComponentInChildren<Text>().text = "退出全屏";
+                }
+                else
+                {
+                    btnScreen.GetComponentInChildren<Text>().text = "全屏";
+                }
+            });
         }
 
         protected override void OnOpen(IUIData uiData = null)

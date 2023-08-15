@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:f72bb580-32a0-4d27-aee3-a88d5a2bc5aa
+	// Generate Id:a0706a31-f3ac-45e3-87fc-433cd1bb3343
 	public partial class TopPanel
 	{
 		public const string Name = "TopPanel";
@@ -15,7 +15,7 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField]
 		public UnityEngine.UI.Button btnHelp;
 		[SerializeField]
-		public UnityEngine.UI.Button btnScreen;
+		public UnityEngine.EventSystems.EventTrigger btnScreen;
 		[SerializeField]
 		public UnityEngine.RectTransform imgHelp;
 		[SerializeField]

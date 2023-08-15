@@ -16,7 +16,7 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 638246851169601130
+  lastScan: 638277270002722145
   supportSerializedTypes:
   - TypeName: System.Collections.Generic.Dictionary`2[[QuestionController+MyChoiceIndex,
       Assembly-CSharp],[System.String, mscorlib]], mscorlib
@@ -24,6 +24,9 @@ MonoBehaviour:
     Emit: 1
   - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[QuestionController+MyChoiceIndex,
       Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Single, mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.IEqualityComparer`1[[QuestionController+MyChoiceIndex,

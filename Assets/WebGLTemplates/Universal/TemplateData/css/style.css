@@ -41,38 +41,22 @@ body{
 
 .subtitle{
 	color:#1896a7;
-	font-size:2.5vh;
+	font-size:1.5vh;
 	padding-bottom:3vh;
-	padding-top: 3vh;
+	padding-top: 58vh;
 	display: block;
-	height:15vh;
+	height:5vh;
 	width:40vw;
 	margin:auto;
-	text-align: center;
-}
-
-.subtitle1{
-	color:#ffffff;
-	font-size:2.5vh;
-	padding-bottom:3vh;
-	padding-top: 3vh;
-	display: block;
-	height:15vh;
-	width:40vw;
-	margin:auto;
-	text-align: center;
-    float: left;
-    margin-left: 10%;
+	text-align:center;
 }
 
 .logo{
-    float: left;
-	height:auto;
+	height:25vh;
 	width:auto;
 	display: block;
 	margin:auto;
-	margin-top:20vh;
-    margin-left: 10%;
+	margin-top:2vh;
 }
 
 #loadingBlock,#errorBrowserBlock{
@@ -89,7 +73,7 @@ body{
 }
 
 #fullBar{
-	background: url("../img/progressFull.png") no-repeat left;
+	background: url("../img/progressFull.png") no-repeat right;
 	float: left; 
 	width: 40%; 
 	height: 100%; 
@@ -101,14 +85,12 @@ body{
 	width:40vw;
 	margin:auto;
 	text-align: center;
-    float: left;
 }
 
 #progressBar{
-	height:8vh;
+	height:1vh;
 	color:#666666;
 	font-size:4vh;
-    margin-left: 8%;
 }
 
 #warningBrowserBlock,#warningMobileBlock,#errorContent{
@@ -141,7 +123,7 @@ body{
 
 /* When aspect-ratio is smaller than 4/3*/
 
-@media (max-aspect-ratio: 4/3){
+/*@media (max-aspect-ratio: 4/3){
 	
 	.webgl-content{
 		-webkit-transform: translate(0%, 0%); transform: translate(0%, 0%);
@@ -215,12 +197,12 @@ body{
 		width:calc(100% - 2px);
 		height:auto;
 	}
-}
+}*/
 
 
 /* When aspect-ratio is bigger than 16/9*/
 
-@media (min-aspect-ratio: 16/9){
+/*@media (min-aspect-ratio: 16/9){
 	body{
 		display:flex;
 		flex-wrap:wrap;
@@ -251,4 +233,4 @@ body{
 		border:1px solid #c6c9ca;
 		height:calc(100% - 2px);
 	}
-}
+}*/

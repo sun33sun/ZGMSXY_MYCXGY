@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 [RequireComponent(typeof(InputField))]
 public class InputMark_WebGL : MonoBehaviour {
-#if UNITY_WEBGL && !UNITY_EDITOR  //只在WebGl下生效
+#if UNITY_WEBGL  //只在WebGl下生效
     public InputField inputField = null;
     void Start () {
         inputField = GetComponent<InputField>();

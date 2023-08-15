@@ -13,6 +13,7 @@ namespace ZGMSXY_MYCXGY
 		private IEnumerator Start()
 		{
 			// 加载UI
+			yield return UIKit.PreLoadPanelAsync<MaskPanel>(UILevel.PopUI,prefabName:Settings.UI + MaskPanel.Name);
 			yield return UIKit.PreLoadPanelAsync<TopPanel>(UILevel.PopUI, prefabName: Settings.UI + TopPanel.Name);
 			yield return UIKit.PreLoadPanelAsync<MainPanel>(UILevel.Bg, prefabName: Settings.UI + MainPanel.Name);
 			yield return UIKit.PreLoadPanelAsync<KnowledgePanel>(UILevel.Common, prefabName: Settings.UI + KnowledgePanel.Name);
@@ -25,6 +26,7 @@ namespace ZGMSXY_MYCXGY
 			UIKit.HidePanel<EvaluatePanel>();
 			yield return UIKit.PreLoadPanelAsync<ReportPanel>(UILevel.Common, prefabName: Settings.UI + ReportPanel.Name);
 			UIKit.HidePanel<ReportPanel>();
+			UIKit.HidePanel<MaskPanel>();
 		}
 	}
 }
