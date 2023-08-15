@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
@@ -12,6 +14,8 @@ namespace ZGMSXY_MYCXGY
 	}
 	public partial class ReportPanel : UIPanel
 	{
+		[SerializeField] private List<ReportItem> reportItems;
+		
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ReportPanelData ?? new ReportPanelData();
@@ -28,6 +32,18 @@ namespace ZGMSXY_MYCXGY
 				await UniTask.Delay(Settings.HideDelay);
 				UIKit.ShowPanel<MainPanel>();
 			}, token));
+
+			ReportData data = new ReportData()
+			{
+				reportName = "名称",
+				startTime = default(DateTime),
+				endTime = default(DateTime),
+				score = 100
+			};
+			foreach (var reportItem in reportItems)
+			{
+				reportItem.LoadData(data);
+			}
 		}
 		
 		protected override void OnOpen(IUIData uiData = null)
@@ -57,6 +73,12 @@ namespace ZGMSXY_MYCXGY
 			transform.DOLocalMoveY(1080, 0.5f);
 			await UniTask.Delay(Settings.HideDelay);
 			base.Hide();
+		}
+
+		public void LoadReport(ReportData data)
+		{
+			ReportItem reportItem = reportItems.Find(r => r.name == data.reportName);
+			reportItem.LoadData(data);
 		}
 	}
 }

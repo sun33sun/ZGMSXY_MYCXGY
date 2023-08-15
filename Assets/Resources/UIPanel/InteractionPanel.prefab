@@ -1477,7 +1477,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787254316971660026}
   toggleTransition: 1
   graphic: {fileID: 3653860564378161168}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1732,7 +1732,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7788234194580860688}
   toggleTransition: 1
   graphic: {fileID: 6978537927258280388}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2360,9 +2360,9 @@ RectTransform:
   m_Father: {fileID: 9130783275618198505}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86, y: -200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2422703735741437273
@@ -2531,9 +2531,9 @@ RectTransform:
   m_Father: {fileID: 9130783275618198505}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86, y: -380}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2422703735756627002
@@ -2643,9 +2643,9 @@ RectTransform:
   m_Father: {fileID: 9130783275618198505}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86, y: -20}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2422703735896877600
@@ -2882,6 +2882,8 @@ GameObject:
   - component: {fileID: 2422703736243032006}
   - component: {fileID: 2422703736243032024}
   - component: {fileID: 2422703736243032007}
+  - component: {fileID: 3510365911985991808}
+  - component: {fileID: 7137166116600609748}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2954,6 +2956,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &3510365911985991808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2422703736243032005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 1
+--- !u!114 &7137166116600609748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2422703736243032005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: Content
+  CustomComment: 
+  mComponentName: UnityEngine.RectTransform
 --- !u!1 &2422703736250767185
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,7 +3296,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5140977482053332725}
   toggleTransition: 1
   graphic: {fileID: 2422703736830248253}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3884,6 +3915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e260d881e8255ad4bbd7ee1b5ec9462e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Content: {fileID: 2422703736243032006}
   btnLeftCountry: {fileID: 2422703735485191466}
   btnRightcountry: {fileID: 2422703736257417755}
   togMaterials:
@@ -4825,7 +4857,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 842232181642475347}
   toggleTransition: 1
   graphic: {fileID: 5750866087620338702}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5964,9 +5996,9 @@ RectTransform:
   m_Father: {fileID: 9130783275618198505}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86, y: -560}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4224107393659913403
@@ -6404,7 +6436,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5340157221343928928}
   toggleTransition: 1
   graphic: {fileID: 4504707940989087597}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7228,7 +7260,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8664011202000387350}
   toggleTransition: 1
   graphic: {fileID: 5951701388019124905}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7333,7 +7365,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 247523438254394761}
   toggleTransition: 1
   graphic: {fileID: 8455137811385350603}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 3510365911985991808}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7771,9 +7803,9 @@ RectTransform:
   m_Father: {fileID: 9130783275618198505}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 86, y: -740}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 173, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7303275996427997128

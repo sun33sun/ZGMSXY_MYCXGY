@@ -4,105 +4,130 @@ using QFramework;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace ZGMSXY_MYCXGY
 {
-	public class EvaluatePanelData : UIPanelData
-	{
-	}
-	public partial class EvaluatePanel : UIPanel
-	{
-		[SerializeField] List<Toggle> togOtherModels;
-		[SerializeField] List<Button> btnOtherModel_Selecteds;
+    public class EvaluatePanelData : UIPanelData
+    {
+    }
 
-		protected override void OnInit(IUIData uiData = null)
-		{
-			mData = uiData as EvaluatePanelData ?? new EvaluatePanelData();
+    public partial class EvaluatePanel : UIPanel
+    {
+        [SerializeField] List<Toggle> togOtherModels;
+        [SerializeField] List<Button> btnOtherModel_Selecteds;
 
-			CancellationToken token = this.GetCancellationTokenOnDestroy();
+        protected override void OnInit(IUIData uiData = null)
+        {
+            mData = uiData as EvaluatePanelData ?? new EvaluatePanelData();
 
-			btnNext.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnNext, async () =>
-			 {
-				 svSelfEvaluate.DOLocalMoveY(1080, 0.5f);
-				 await UniTask.Delay(Settings.HideDelay);
-				 svSelfEvaluate.gameObject.SetActive(false);
-				 OtherModel.gameObject.SetActive(true);
-				 OtherModel.DOLocalMoveY(0, 0.5f);
-			 }, token));
+            CancellationToken token = this.GetCancellationTokenOnDestroy();
 
-			for (int i = 0; i < togOtherModels.Count; i++)
-			{
-				int index = i;
-				Image togImg = togOtherModels[i].GetComponent<Image>();
-				Image imgOtherModel = togOtherModels[i].transform.GetChild(0).GetComponent<Image>();
-				togOtherModels[i].onValueChanged.AddListener(isOn =>
-				{
-					if (isOn)
-					{
-						togImg.color = new Color(0.9f, 0.58f, 0.22f, 1);
-						imgOtherModel.color = new Color(0.5f, 0.5f, 0.5f, 1);
-						btnOtherModel_Selecteds[index].gameObject.SetActive(true);
-					}
-					else
-					{
-						togImg.color = Color.white;
-						imgOtherModel.color = Color.white;
-						btnOtherModel_Selecteds[index].gameObject.SetActive(false);
-					}
-				});
+            btnBack.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+            {
+                Hide();
+                await UniTask.Delay(Settings.HideDelay);
+                UIKit.ShowPanel<MainPanel>();
+            }, token));
 
-				btnOtherModel_Selecteds[i].onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnOtherModel_Selecteds[i], async () =>
-				{
-					OtherModel.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(Settings.HideDelay);
-					togOtherModels[index].isOn = false;
-					OtherModel.gameObject.SetActive(false);
-				}, token));
+            btnNext.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnNext, async () =>
+            {
+                svSelfEvaluate.DOLocalMoveY(1080, 0.5f);
+                await UniTask.Delay(Settings.HideDelay);
+                svSelfEvaluate.gameObject.SetActive(false);
+                OtherModel.gameObject.SetActive(true);
+                OtherModel.DOLocalMoveY(0, 0.5f);
+            }, token));
 
-				btnEnterEvaluate.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnOtherModel_Selecteds[i], async () =>
-				{
-					svDoEvaluate.gameObject.SetActive(true);
-					svDoEvaluate.DOLocalMoveY(-45, 0.5f);
-					await UniTask.Delay(Settings.ShowDelay);
-				}, token));
-			}
-		}
+            for (int i = 0; i < togOtherModels.Count; i++)
+            {
+                int index = i;
+                Image togImg = togOtherModels[i].GetComponent<Image>();
+                Image imgOtherModel = togOtherModels[i].transform.GetChild(0).GetComponent<Image>();
+                togOtherModels[i].onValueChanged.AddListener(isOn =>
+                {
+                    if (isOn)
+                    {
+                        togImg.color = new Color(0.9f, 0.58f, 0.22f, 1);
+                        imgOtherModel.color = new Color(0.5f, 0.5f, 0.5f, 1);
+                        btnOtherModel_Selecteds[index].gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        togImg.color = Color.white;
+                        imgOtherModel.color = Color.white;
+                        btnOtherModel_Selecteds[index].gameObject.SetActive(false);
+                    }
+                });
 
-		protected override void OnOpen(IUIData uiData = null)
-		{
-		}
+                btnOtherModel_Selecteds[i].onClick.AddListener(Settings.GetButtonIgnoreClickFunc(
+                    btnOtherModel_Selecteds[i], async () =>
+                    {
+                        OtherModel.DOLocalMoveY(1080, 0.5f);
+                        await UniTask.Delay(Settings.HideDelay);
+                        togOtherModels[index].isOn = false;
+                        OtherModel.gameObject.SetActive(false);
+                        btnEnterEvaluate.gameObject.SetActive(true);
+                    }, token));
+            }
 
-		protected override void OnShow()
-		{
-		}
+            btnEnterEvaluate.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnEnterEvaluate,
+                async () =>
+                {
+                    svDoEvaluate.gameObject.SetActive(true);
+                    svDoEvaluate.DOLocalMoveY(-45, 0.5f);
+                    await UniTask.Delay(Settings.ShowDelay);
+                    btnEnterEvaluate.gameObject.SetActive(false);
+                }, token));
+            btnBackMain.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+            {
+                Hide();
+                await UniTask.Delay(Settings.HideDelay);
+                UIKit.ShowPanel<MainPanel>();
+            }, token));
+        }
 
-		protected override void OnHide()
-		{
-		}
+        protected override void OnOpen(IUIData uiData = null)
+        {
+        }
 
-		protected override void OnClose()
-		{
-		}
+        protected override void OnShow()
+        {
+        }
 
-		public override void Show()
-		{
-			base.Show();
-			svSelfEvaluate.gameObject.SetActive(true);
-			svSelfEvaluate.localPosition = new Vector3(0, -45, 0);
-			OtherModel.gameObject.SetActive(false);
-			OtherModel.localPosition = new Vector3(0, 1080, 0);
-			svDoEvaluate.gameObject.SetActive(false);
-			svDoEvaluate.transform.localPosition = new Vector3(0, 1080, 0);
-			btnEnterEvaluate.gameObject.SetActive(false);
-			transform.DOLocalMoveY(0, 0.5f);
-		}
+        protected override void OnHide()
+        {
+        }
 
-		public override async void Hide()
-		{
-			transform.DOLocalMoveY(1080, 0.5f);
-			await UniTask.Delay(Settings.HideDelay);
-			base.Hide();
-		}
-	}
+        protected override void OnClose()
+        {
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            svSelfEvaluate.gameObject.SetActive(true);
+            svSelfEvaluate.localPosition = new Vector3(0, -45, 0);
+            OtherModel.gameObject.SetActive(false);
+            OtherModel.localPosition = new Vector3(0, 1080, 0);
+            svDoEvaluate.gameObject.SetActive(false);
+            svDoEvaluate.transform.localPosition = new Vector3(0, 1080, 0);
+            btnEnterEvaluate.gameObject.SetActive(false);
+            for (int i = 0; i < togOtherModels.Count; i++)
+            {
+                if(togOtherModels[i].isOn)
+                    togOtherModels[i].isOn = false;
+            }
+            transform.DOLocalMoveY(0, 0.5f);
+        }
+
+        public override async void Hide()
+        {
+            transform.DOLocalMoveY(1080, 0.5f);
+            await UniTask.Delay(Settings.HideDelay);
+            base.Hide();
+        }
+    }
 }

@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:f759d59e-6b90-440e-92ea-624e09bb88b9
+	// Generate Id:fbc005f8-3602-4c69-baae-4963375e703e
 	public partial class InteractionPanel
 	{
 		public const string Name = "InteractionPanel";

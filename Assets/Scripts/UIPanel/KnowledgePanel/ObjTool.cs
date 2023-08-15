@@ -15,7 +15,6 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class ObjTool : UIElement
 	{
-		[SerializeField] List<Toggle> principleItems;
 		private void Awake()
 		{
 			CancellationToken token = this.GetCancellationTokenOnDestroy();
@@ -115,34 +114,6 @@ namespace ZGMSXY_MYCXGY
 				 await UniTask.Delay(Settings.HideDelay);
 				 imgPlayEnd.gameObject.SetActive(false);
 			 }, token));
-
-			Vector2 bigSize = new Vector2(240, 240);
-			Vector2 smallSize = new Vector2(190, 190);
-			for (int i = 0; i < principleItems.Count; i++)
-			{
-				int index = i;
-				Func<bool> principleItemsFunc = Settings.GetToggleAnimatorEndFunc(principleItems[i]);
-				RectTransform rect = principleItems[i].transform as RectTransform;
-				principleItems[i].onValueChanged.AddListener(async isOn =>
-				{
-					if (token.IsCancellationRequested) return;
-					if (isOn)
-					{
-						UIRoot.Instance.GraphicRaycaster.enabled = false;
-						await UniTask.WaitUntil(principleItemsFunc);
-						await UniTask.Delay(Settings.HideDelay);
-						rect.DOSizeDelta(bigSize, 0.5f);
-						await UniTask.Delay(Settings.ShowDelay);
-						UIRoot.Instance.GraphicRaycaster.enabled = true;
-						LayoutRebuilder.ForceRebuildLayoutImmediate(hlgPrinciple);
-					}
-					else
-					{
-						rect.DOSizeDelta(smallSize, 0.5f);
-						await UniTask.Delay(Settings.ShowDelay);
-					}
-				});
-			}
 		}
 
 		public override void Show()
@@ -166,6 +137,11 @@ namespace ZGMSXY_MYCXGY
 
 		protected override void OnBeforeDestroy()
 		{
+		}
+
+		public void Reset()
+		{
+			togDescription.isOn = true;
 		}
 	}
 }

@@ -8851,8 +8851,9 @@ GameObject:
   - component: {fileID: 4108673695653347811}
   - component: {fileID: 4108673695653347810}
   - component: {fileID: 4108673695653347809}
+  - component: {fileID: 7478011765853806024}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: InputField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8980,6 +8981,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &7478011765853806024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4108673695653347815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fe79cded16a4f4d99bb58f9f8f6f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4108673695682698872
 GameObject:
   m_ObjectHideFlags: 0
@@ -12789,8 +12802,9 @@ GameObject:
   - component: {fileID: 4108673696098222248}
   - component: {fileID: 4108673696098222255}
   - component: {fileID: 4108673696098222254}
+  - component: {fileID: 6595319853943681071}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: InputField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12918,6 +12932,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &6595319853943681071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4108673696098222252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fe79cded16a4f4d99bb58f9f8f6f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4108673696099111509
 GameObject:
   m_ObjectHideFlags: 0
@@ -13350,8 +13376,9 @@ GameObject:
   - component: {fileID: 4108673696140059329}
   - component: {fileID: 4108673696140059328}
   - component: {fileID: 4108673696140059335}
+  - component: {fileID: 7725015666411321744}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: InputField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13479,6 +13506,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &7725015666411321744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4108673696140059333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fe79cded16a4f4d99bb58f9f8f6f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4108673696171484424
 GameObject:
   m_ObjectHideFlags: 0
@@ -18217,8 +18256,9 @@ GameObject:
   - component: {fileID: 4108673696728082355}
   - component: {fileID: 4108673696728082354}
   - component: {fileID: 4108673696728082353}
+  - component: {fileID: 8238478292569031712}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: InputField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18346,6 +18386,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &8238478292569031712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4108673696728082359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fe79cded16a4f4d99bb58f9f8f6f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4108673696755711473
 GameObject:
   m_ObjectHideFlags: 0
@@ -22837,8 +22889,9 @@ GameObject:
   - component: {fileID: 4108673697223181300}
   - component: {fileID: 4108673697223181307}
   - component: {fileID: 4108673697223181301}
+  - component: {fileID: 5083867703053991607}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: InputField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22966,6 +23019,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &5083867703053991607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4108673697223181305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fe79cded16a4f4d99bb58f9f8f6f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4108673697236925700
 GameObject:
   m_ObjectHideFlags: 0

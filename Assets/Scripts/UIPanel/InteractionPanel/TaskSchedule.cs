@@ -32,7 +32,6 @@ namespace ZGMSXY_MYCXGY
 
         //下一个状态
         public void NextState(){
-            stateIndex++;
             if (stateIndex >= imgStates.Count){
                 print("超出状态范围");
             }else{
@@ -40,5 +39,13 @@ namespace ZGMSXY_MYCXGY
                 stateIndex++;
             }
         }
+
+        private void OnEnable()
+        {
+	        stateIndex = 0;
+	        for (int i = 0; i < imgStates.Count; i++)
+		        imgStates[i].sprite = spriteInProgress;
+        }
+        
 	}
 }

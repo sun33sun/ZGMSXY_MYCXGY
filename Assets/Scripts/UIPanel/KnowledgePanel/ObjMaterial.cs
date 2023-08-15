@@ -151,6 +151,15 @@ namespace ZGMSXY_MYCXGY
 			entityGroup.transform.localPosition = hidePos;
 			entityDescription.gameObject.SetActive(false);
 			entityDescription.transform.localPosition = hidePos;
+
+			togMap.isOn = true;
+			togEntity.isOn = false;
+            togAnimation.isOn = false;
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
 		}
 
 		protected override void OnBeforeDestroy()

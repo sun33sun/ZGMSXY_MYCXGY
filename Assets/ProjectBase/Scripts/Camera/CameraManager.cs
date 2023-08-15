@@ -20,7 +20,7 @@ namespace ProjectBase
 		[SerializeField] CinemachineVirtualCamera followC = null;
 		[SerializeField] CinemachineVirtualCamera thirdC = null;
 
-		//ÂşÓÎÏà»úµÄ¸ÕÌå
+		//æ¼«æ¸¸ç›¸æœºçš„åˆšä½“
 		Rigidbody roamRig = null;
 
 		Vector3 originPos;
@@ -45,28 +45,28 @@ namespace ProjectBase
 
 		private void Start()
 		{
-			//²éÕÒ×é¼ş
+			//æŸ¥æ‰¾ç»„ä»¶
 			roamRig = firstC.GetComponent<Rigidbody>();
-			//¼ÇÂ¼³õÊ¼Î»ÖÃ
+			//è®°å½•åˆå§‹ä½ç½®
 			originPos = firstC.transform.position;
 			originAngle = firstC.transform.rotation.eulerAngles;
 			originFieldOfView = firstC.m_Lens.FieldOfView;
 
-			#region ÒÆ¶¯ÓëĞı×ª
-			//ÒÆ¶¯
+			#region ç§»åŠ¨ä¸æ—‹è½¬
+			//ç§»åŠ¨
 			InputMgr.GetInstance().ChangerInput(true);
-			//ÉÏÏÂÒÆ¶¯
-			EventCenter.GetInstance().AddEventListener(KeyCode.LeftControl + "±£³Ö", OnEState);
-			EventCenter.GetInstance().AddEventListener<float>("Êó±ê¹öÂÖ", OnMouseScrollWheel);
-			//Ğı×ª
-			EventCenter.GetInstance().AddEventListener("Êó±êÓÒ¼ü°´ÏÂ", OnMouseRightDown);
-			EventCenter.GetInstance().AddEventListener("Êó±êÓÒ¼üÌ§Æğ", OnMouseRightUp);
-			EventCenter.GetInstance().AddEventListener<Vector2>("Êó±ê»¬¶¯", OnMouseSliding);
-			EventCenter.GetInstance().AddEventListener(KeyCode.Space + "±£³Ö", OnQState);
-			EventCenter.GetInstance().AddEventListener<Vector2>("ÒÆ¶¯·½Ïò", UpdateVelocity);
+			//ä¸Šä¸‹ç§»åŠ¨
+			EventCenter.GetInstance().AddEventListener(KeyCode.LeftControl + "ä¿æŒ", OnEState);
+			EventCenter.GetInstance().AddEventListener<float>("é¼ æ ‡æ»šè½®", OnMouseScrollWheel);
+			//æ—‹è½¬
+			EventCenter.GetInstance().AddEventListener("é¼ æ ‡å³é”®æŒ‰ä¸‹", OnMouseRightDown);
+			EventCenter.GetInstance().AddEventListener("é¼ æ ‡å³é”®æŠ¬èµ·", OnMouseRightUp);
+			EventCenter.GetInstance().AddEventListener<Vector2>("é¼ æ ‡æ»‘åŠ¨", OnMouseSliding);
+			EventCenter.GetInstance().AddEventListener(KeyCode.Space + "ä¿æŒ", OnQState);
+			EventCenter.GetInstance().AddEventListener<Vector2>("ç§»åŠ¨æ–¹å‘", UpdateVelocity);
 			#endregion
 
-			#region ³õÊ¼»¯ÊôĞÔ
+			#region åˆå§‹åŒ–å±æ€§
 			personViews.Add(new NonePersonView());
 			personViews.Add(new FirstPersonView(firstC.transform));
 			personViews.Add(new ThirdPersonView(thirdC.transform));
@@ -77,7 +77,7 @@ namespace ProjectBase
 			#endregion
 		}
 
-		#region ÒÆ¶¯¡¢ÉÏÏÂÒÆ¶¯¡¢Ğı×ª¡¢Ëõ·ÅÊÓÒ°
+		#region ç§»åŠ¨ã€ä¸Šä¸‹ç§»åŠ¨ã€æ—‹è½¬ã€ç¼©æ”¾è§†é‡
 		void UpdateVelocity(Vector2 dir)
 		{
 			personViews[(int)pvType].UpdateVelocity(dir);
@@ -158,15 +158,15 @@ namespace ProjectBase
 
 		private void OnDestroy()
 		{
-			//ÉÏÏÂÒÆ¶¯
-			EventCenter.GetInstance().RemoveEventListener(KeyCode.LeftControl + "±£³Ö", OnEState);
-			EventCenter.GetInstance().RemoveEventListener<float>("Êó±ê¹öÂÖ", OnMouseScrollWheel);
-			//Ğı×ª
-			EventCenter.GetInstance().RemoveEventListener("Êó±êÓÒ¼ü°´ÏÂ", OnMouseRightDown);
-			EventCenter.GetInstance().RemoveEventListener("Êó±êÓÒ¼üÌ§Æğ", OnMouseRightUp);
-			EventCenter.GetInstance().RemoveEventListener<Vector2>("Êó±ê»¬¶¯", OnMouseSliding);
-			EventCenter.GetInstance().RemoveEventListener(KeyCode.Space + "±£³Ö", OnQState);
-			EventCenter.GetInstance().RemoveEventListener<Vector2>("ÒÆ¶¯·½Ïò", UpdateVelocity);
+			//ä¸Šä¸‹ç§»åŠ¨
+			EventCenter.GetInstance().RemoveEventListener(KeyCode.LeftControl + "ä¿æŒ", OnEState);
+			EventCenter.GetInstance().RemoveEventListener<float>("é¼ æ ‡æ»šè½®", OnMouseScrollWheel);
+			//æ—‹è½¬
+			EventCenter.GetInstance().RemoveEventListener("é¼ æ ‡å³é”®æŒ‰ä¸‹", OnMouseRightDown);
+			EventCenter.GetInstance().RemoveEventListener("é¼ æ ‡å³é”®æŠ¬èµ·", OnMouseRightUp);
+			EventCenter.GetInstance().RemoveEventListener<Vector2>("é¼ æ ‡æ»‘åŠ¨", OnMouseSliding);
+			EventCenter.GetInstance().RemoveEventListener(KeyCode.Space + "ä¿æŒ", OnQState);
+			EventCenter.GetInstance().RemoveEventListener<Vector2>("ç§»åŠ¨æ–¹å‘", UpdateVelocity);
 		}
 
 		public async UniTask ThirdPerson(Transform target)

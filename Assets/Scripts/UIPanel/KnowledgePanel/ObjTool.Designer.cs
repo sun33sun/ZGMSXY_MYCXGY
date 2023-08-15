@@ -14,15 +14,10 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField] public UnityEngine.UI.Toggle togPrinciple;
 		[SerializeField] public UnityEngine.UI.Toggle togAge;
 		[SerializeField] public UnityEngine.UI.Toggle togCountry;
-		[SerializeField] public UnityEngine.UI.ScrollRect descriptionGroup;
-		[SerializeField] public RectTransform principleGroup;
-		[SerializeField] public UnityEngine.RectTransform hlgPrinciple;
-		[SerializeField] public RectTransform ageGroup;
-		[SerializeField] public UnityEngine.UI.Button btnLeftAge;
-		[SerializeField] public UnityEngine.UI.Button btnRightAge;
-		[SerializeField] public RectTransform countryGroup;
-		[SerializeField] public UnityEngine.UI.Button btnLeftCountry;
-		[SerializeField] public UnityEngine.UI.Button btnRightcountry;
+		[SerializeField] public DescriptionGroup descriptionGroup;
+		[SerializeField] public PrincipleGroup principleGroup;
+		[SerializeField] public AgeGroup ageGroup;
+		[SerializeField] public CountryGroup countryGroup;
 		[SerializeField] public UnityEngine.UI.Image imgPlayEnd;
 		[SerializeField] public UnityEngine.UI.Button btnPlayEnd;
 
@@ -34,13 +29,8 @@ namespace ZGMSXY_MYCXGY
 			togCountry = null;
 			descriptionGroup = null;
 			principleGroup = null;
-			hlgPrinciple = null;
 			ageGroup = null;
-			btnLeftAge = null;
-			btnRightAge = null;
 			countryGroup = null;
-			btnLeftCountry = null;
-			btnRightcountry = null;
 			imgPlayEnd = null;
 			btnPlayEnd = null;
 		}

@@ -46,5 +46,6 @@ namespace ZGMSXY_MYCXGY
 
 		public const int ShowDelay = 550;
 		public const int HideDelay = 500;
+		public const int smallDelay = 100;
 	}
 }

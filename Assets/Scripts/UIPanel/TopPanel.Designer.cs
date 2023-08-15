@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:16936e17-c3c4-4b1b-8f97-80cc3e5ee544
+	// Generate Id:f72bb580-32a0-4d27-aee3-a88d5a2bc5aa
 	public partial class TopPanel
 	{
 		public const string Name = "TopPanel";
@@ -16,6 +16,10 @@ namespace ZGMSXY_MYCXGY
 		public UnityEngine.UI.Button btnHelp;
 		[SerializeField]
 		public UnityEngine.UI.Button btnScreen;
+		[SerializeField]
+		public UnityEngine.RectTransform imgHelp;
+		[SerializeField]
+		public UnityEngine.UI.Button btnCloseHelp;
 		
 		private TopPanelData mPrivateData = null;
 		
@@ -24,6 +28,8 @@ namespace ZGMSXY_MYCXGY
 			btnTip = null;
 			btnHelp = null;
 			btnScreen = null;
+			imgHelp = null;
+			btnCloseHelp = null;
 			
 			mData = null;
 		}

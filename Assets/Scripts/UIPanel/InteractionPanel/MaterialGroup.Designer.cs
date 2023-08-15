@@ -10,11 +10,13 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class MaterialGroup
 	{
+		[SerializeField] public UnityEngine.RectTransform Content;
 		[SerializeField] public UnityEngine.UI.Button btnLeftCountry;
 		[SerializeField] public UnityEngine.UI.Button btnRightcountry;
 
 		public void Clear()
 		{
+			Content = null;
 			btnLeftCountry = null;
 			btnRightcountry = null;
 		}

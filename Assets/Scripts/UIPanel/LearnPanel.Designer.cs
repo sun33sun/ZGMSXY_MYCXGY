@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:c363c99a-9252-4a84-9801-8bff2dc4f8e0
+	// Generate Id:23d56d5c-7ab2-4232-8fa5-8325e9d5c824
 	public partial class LearnPanel
 	{
 		public const string Name = "LearnPanel";
@@ -27,6 +27,8 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField]
 		public UnityEngine.UI.Button btnSubmitTitle;
 		[SerializeField]
+		public QuestionManager Content;
+		[SerializeField]
 		public UnityEngine.RectTransform imgPlay;
 		[SerializeField]
 		public UnityEngine.UI.Button btnConfirmPlay;
@@ -45,6 +47,7 @@ namespace ZGMSXY_MYCXGY
 			btnPlayEnd = null;
 			titleGroup = null;
 			btnSubmitTitle = null;
+			Content = null;
 			imgPlay = null;
 			btnConfirmPlay = null;
 			btnCancelPlay = null;

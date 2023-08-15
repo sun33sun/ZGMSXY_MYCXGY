@@ -41,7 +41,6 @@ namespace ZGMSXY_MYCXGY
 				materialGroup.gameObject.SetActive(false);
 				NextState();
 				ModelRoot.Instance.gameObject.SetActive(true);
-				//等待点击Cube
 				UniTask.Void(async t => { 
 					await ModelRoot.Instance.WaitClickCube();
 					imgPlayRealVideo.gameObject.SetActive(true);
@@ -54,8 +53,6 @@ namespace ZGMSXY_MYCXGY
 				imgNext.transform.DOLocalMoveY(1080, 0.5f);
 				await UniTask.Delay(Settings.HideDelay);
 				imgNext.gameObject.SetActive(false);
-				imgPlayRealVideo.gameObject.SetActive(true);
-				imgPlayRealVideo.DOLocalMoveY(0, 0.5f);
 			}, token));
 
 			btnConfirmPlayRealVideo.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmPlayRealVideo, async () =>
@@ -87,24 +84,23 @@ namespace ZGMSXY_MYCXGY
 
 			btnConfirmSubmitModel.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmSubmitModel, async () =>
 			{
-				imgSubmitModel.DOLocalMoveY(1080, 0.5f);
-				imgSubmitModel.gameObject.SetActive(false);
-				//进入评测模块
-				UIKit.GetPanel<EvaluatePanel>().Show();
+				Hide();
+				await UniTask.Delay(Settings.HideDelay);
+				UIKit.ShowPanel<EvaluatePanel>();
 			}, token));
 
 			btnCancelSubmitModel.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelSubmitModel, async () =>
 			{
 				imgSubmitModel.DOLocalMoveY(1080, 0.5f);
-				imgSubmitModel.gameObject.SetActive(false);
 				await UniTask.Delay(Settings.HideDelay);
+				imgSubmitModel.gameObject.SetActive(false);
 				btnEnterEvaluate.gameObject.SetActive(true);
 			}, token));
 
 			btnEnterEvaluate.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnEnterEvaluate, async () =>
 			{
-				imgSubmitModel.DOLocalMoveY(0, 0.5f);
 				imgSubmitModel.gameObject.SetActive(true);
+				imgSubmitModel.DOLocalMoveY(0, 0.5f);
 				await UniTask.Delay(Settings.HideDelay);
 				btnEnterEvaluate.gameObject.SetActive(false);
 			}, token));
@@ -152,6 +148,7 @@ namespace ZGMSXY_MYCXGY
 			base.Show();
 			vpRealVideo.gameObject.SetActive(false);
 			materialGroup.transform.localPosition = new Vector3(20, -421, 0);
+			materialGroup.gameObject.SetActive(true);
 			imgNext.gameObject.SetActive(false);
 			imgNext.transform.localPosition = new Vector3(0, 1080, 0);
 			imgPlayRealVideo.gameObject.SetActive(false);
@@ -159,12 +156,12 @@ namespace ZGMSXY_MYCXGY
 			imgSubmitModel.gameObject.SetActive(false);
 			imgSubmitModel.transform.localPosition = new Vector3(0, 1080, 0);
 			btnEnterEvaluate.gameObject.SetActive(false);
-			btnEnterEvaluate.transform.localPosition = new Vector3(0, 1080, 0);
 			transform.DOLocalMoveY(0, 0.5f);
 		}
 
 		public override async void Hide()
 		{
+			vpRealVideo.Stop();
 			transform.DOLocalMoveY(1080, 0.5f);
 			await UniTask.Delay(Settings.HideDelay);
 			base.Hide();

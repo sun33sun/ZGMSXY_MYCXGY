@@ -16,7 +16,6 @@ namespace ZGMSXY_MYCXGY
 	{
 		[SerializeField] Transform MaterialGroup;
 		[SerializeField] Transform EntityGroup;
-		////¹¤¾ß
 		//[SerializeField] List<Toggle> togPrinciples;
 
 		protected override void OnInit(IUIData uiData = null)
@@ -39,7 +38,6 @@ namespace ZGMSXY_MYCXGY
 		protected override void OnShow()
 		{
 			Vector3 hidePos = new Vector3(0, 1080, 0);
-			//²ÄÁÏ
 			MaterialGroup.localPosition = Vector3.zero;
 			MaterialGroup.gameObject.SetActive(true);
 			EntityGroup.localPosition = hidePos;

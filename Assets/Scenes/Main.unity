@@ -1657,6 +1657,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114009023594300624, guid: c70aac0028afd42eabc9e0c55824c824,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
     - target: {fileID: 114574186442532806, guid: c70aac0028afd42eabc9e0c55824c824,
         type: 3}
       propertyPath: m_MatchWidthOrHeight
