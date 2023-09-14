@@ -65,6 +65,7 @@ namespace QFramework
 			base.Hide();
 		}
 
+
 		protected virtual void OnInit(IUIData uiData = null)
 		{
 

@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
- * 2023.8 ADMIN-20230222V
+ * 2023.9 ADMIN-20230222V
  ****************************************************************************/
 
 using UnityEngine;
@@ -10,10 +10,13 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class ObjMaterial
 	{
+		[SerializeField] public UnityEngine.UI.Toggle togAnimation;
 		[SerializeField] public UnityEngine.UI.Toggle togMap;
 		[SerializeField] public UnityEngine.UI.Toggle togEntity;
-		[SerializeField] public UnityEngine.UI.Toggle togAnimation;
 		[SerializeField] public UnityEngine.RectTransform materialGroup;
+		[SerializeField] public UnityEngine.Video.VideoPlayer vpAnimationGroup;
+		[SerializeField] public UnityEngine.UI.RawImage animationRawImage;
+		[SerializeField] public UnityEngine.UI.Button btnStartAnim;
 		[SerializeField] public UnityEngine.RectTransform entityGroup;
 		[SerializeField] public UnityEngine.RectTransform materialDescription;
 		[SerializeField] public UnityEngine.UI.Image imgMaterialBig;
@@ -23,14 +26,16 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField] public UnityEngine.UI.Button btnCloseEntityDescription;
 		[SerializeField] public TMPro.TextMeshProUGUI tmpEntityDescriptionName;
 		[SerializeField] public TMPro.TextMeshProUGUI tmpEntityDescription;
-		[SerializeField] public RectTransform animationGroup;
 
 		public void Clear()
 		{
+			togAnimation = null;
 			togMap = null;
 			togEntity = null;
-			togAnimation = null;
 			materialGroup = null;
+			vpAnimationGroup = null;
+			animationRawImage = null;
+			btnStartAnim = null;
 			entityGroup = null;
 			materialDescription = null;
 			imgMaterialBig = null;
@@ -40,7 +45,6 @@ namespace ZGMSXY_MYCXGY
 			btnCloseEntityDescription = null;
 			tmpEntityDescriptionName = null;
 			tmpEntityDescription = null;
-			animationGroup = null;
 		}
 
 		public override string ComponentName

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -30,11 +32,9 @@ namespace ZGMSXY_MYCXGY
 			{
 				if (token.IsCancellationRequested) return;
 				UIRoot.Instance.GraphicRaycaster.enabled = false;
-				//topMask.gameObject.SetActive(true);
-				await UniTask.WaitUntil(func);
+				await UniTask.WaitUntil(func,cancellationToken:token);
 				await invoke();
 				UIRoot.Instance.GraphicRaycaster.enabled = true;
-				//topMask.gameObject.SetActive(false);
 			};
 		}
 
@@ -43,6 +43,8 @@ namespace ZGMSXY_MYCXGY
 			Animator animator = tog.animator;
 			return () => animator.GetCurrentAnimatorStateInfo(0).IsName("Normal");
 		}
+		
+
 
 		public const int ShowDelay = 550;
 		public const int HideDelay = 500;

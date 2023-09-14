@@ -18,19 +18,14 @@ MonoBehaviour:
     GameObject: {fileID: 0}
     From: 0
     NameToFullName: []
-    BindInfos:
-    - TypeName: UnityEngine.UI.Text
-      PathToRoot: Text
-      MemberName: Text
-    - TypeName: UnityEngine.UI.Image
-      PathToRoot: Image
-      MemberName: Image
-    ScriptsFolder: Assets/Scripts/UIRoot
-    ClassName: UIRoot
+    BindInfos: []
+    ScriptsFolder: Assets/Scripts/Game
+    ClassName: TaskInteractive1
     Namespace: ZGMSXY_MYCXGY
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\nnamespace ZGMSXY_MYCXGY\r\n{\r\n\tpublic
-      partial class UIRoot : ViewController\r\n\t{\r\n\t\tvoid Start()\r\n\t\t{\r\n\t\t\t//
+      partial class TaskInteractive1 : ViewController\r\n\t{\r\n\t\tvoid Start()\r\n\t\t{\r\n\t\t\t//
       Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:6d07fa4b-682e-4cb4-911a-78616f673ac3\r\nusing UnityEngine;\r\n\r\nnamespace
-      ZGMSXY_MYCXGY\r\n{\r\n\tpublic partial class UIRoot\r\n\t{\r\n\r\n\t\tpublic
-      UnityEngine.UI.Text Text;\r\n\r\n\t\tpublic UnityEngine.UI.Image Image;\r\n\r\n\t}\r\n}\r\n"
+    DesignerCode: "// Generate Id:9d669237-87d0-461c-b04b-582fd10d4b8e\r\nusing UnityEngine;\r\n\r\nnamespace
+      ZGMSXY_MYCXGY\r\n{\r\n\tpublic partial class TaskInteractive1\r\n\t{\r\n\r\n\t\tpublic
+      UnityEngine.Animator Task1_DrawLine;\r\n\r\n\t\tpublic UnityEngine.Animator
+      Task1_Drilling;\r\n\r\n\t}\r\n}\r\n"

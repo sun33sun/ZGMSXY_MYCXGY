@@ -48,8 +48,7 @@ namespace ZGMSXY_MYCXGY
         public override async void Hide()
         {
             await UniTask.WaitUntil(() => isCompleted);
-            transform.DOLocalMoveY(1080, 0.5f);
-            await UniTask.Delay(Settings.HideDelay);
+            await transform.DOLocalMoveY(1080, 0.5f).AsyncWaitForCompletion();
             base.Hide();
         }
     }

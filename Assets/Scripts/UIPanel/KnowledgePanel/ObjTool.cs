@@ -10,6 +10,7 @@ using QFramework;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -19,118 +20,73 @@ namespace ZGMSXY_MYCXGY
 		{
 			CancellationToken token = this.GetCancellationTokenOnDestroy();
 
-			Func<bool> funcDescription = Settings.GetToggleAnimatorEndFunc(togDescription);
-			togDescription.onValueChanged.AddListener(async isOn =>
+			togDescription.AddAwaitAction(async isOn =>
 			{
-				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					UIRoot.Instance.GraphicRaycaster.enabled = false;
-					await UniTask.WaitUntil(funcDescription);
-					await UniTask.Delay(Settings.HideDelay);
-					descriptionGroup.gameObject.SetActive(true);
-					descriptionGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(Settings.ShowDelay);
-					UIRoot.Instance.GraphicRaycaster.enabled = true;
+					descriptionGroup.transform.SetAsLastSibling();
+					await descriptionGroup.ShowAsync();
+				}
+				else
+					await descriptionGroup.HideAsync();
+			});
+
+			togPrinciple.AddAwaitAction(async isOn=>
+			{
+				if (isOn)
+				{
+					principleGroup.transform.SetAsLastSibling();
+					await principleGroup.ShowAsync();
 				}
 				else
 				{
-					descriptionGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(Settings.HideDelay);
-					descriptionGroup.gameObject.SetActive(false);
+					await principleGroup.HideAsync();
 				}
 			});
 
-			Func<bool> funcPrinciple = Settings.GetToggleAnimatorEndFunc(togPrinciple);
-			togPrinciple.onValueChanged.AddListener(async isOn =>
+			togAge.AddAwaitAction(async isOn =>
 			{
-				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					UIRoot.Instance.GraphicRaycaster.enabled = false;
-					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(Settings.HideDelay);
-					principleGroup.gameObject.SetActive(true);
-					principleGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(Settings.ShowDelay);
-					UIRoot.Instance.GraphicRaycaster.enabled = true;
+					ageGroup.transform.SetAsLastSibling();
+					await ageGroup.ShowAsync();
 				}
 				else
 				{
-					principleGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(Settings.HideDelay);
-					principleGroup.gameObject.SetActive(false);
+					await ageGroup.HideAsync();
 				}
-
 			});
 
-			Func<bool> funcAge = Settings.GetToggleAnimatorEndFunc(togAge);
-			togAge.onValueChanged.AddListener(async isOn =>
+			togCountry.AddAwaitAction(async isOn =>
 			{
-				if (token.IsCancellationRequested) return;
 				if (isOn)
 				{
-					UIRoot.Instance.GraphicRaycaster.enabled = false;
-					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(Settings.HideDelay);
-					ageGroup.gameObject.SetActive(true);
-					ageGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(Settings.ShowDelay);
-					UIRoot.Instance.GraphicRaycaster.enabled = true;
+					togCountry.transform.SetAsLastSibling();
+					await countryGroup.ShowAsync();
 				}
 				else
 				{
-					ageGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(Settings.HideDelay);
-					ageGroup.gameObject.SetActive(false);
+					await countryGroup.HideAsync();					
 				}
 			});
 
-			Func<bool> funcCountry = Settings.GetToggleAnimatorEndFunc(togCountry);
-			togCountry.onValueChanged.AddListener(async isOn =>
+			btnPlayEnd.AddAwaitAction(async () =>
 			{
-				if (token.IsCancellationRequested) return;
-				if (isOn)
-				{
-					UIRoot.Instance.GraphicRaycaster.enabled = false;
-					await UniTask.WaitUntil(funcPrinciple);
-					await UniTask.Delay(Settings.HideDelay);
-					countryGroup.gameObject.SetActive(true);
-					countryGroup.transform.DOLocalMoveY(0, 0.5f);
-					await UniTask.Delay(Settings.ShowDelay);
-					UIRoot.Instance.GraphicRaycaster.enabled = true;
-				}
-				else
-				{
-					countryGroup.transform.DOLocalMoveY(1080, 0.5f);
-					await UniTask.Delay(Settings.HideDelay);
-					countryGroup.gameObject.SetActive(false);
-				}
+				await imgPlayEnd.ShowAsync();
 			});
-
-			btnPlayEnd.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnPlayEnd, async () =>
-			 {
-				 imgPlayEnd.transform.DOLocalMoveY(1080, 0.5f);
-				 await UniTask.Delay(Settings.HideDelay);
-				 imgPlayEnd.gameObject.SetActive(false);
-			 }, token));
 		}
 
 		public override void Show()
 		{
 			base.Show();
-			Vector3 hidePos = new Vector3(0, 1080, 0);
+			
+			principleGroup.ShowSync();
+			
+			descriptionGroup.HideSync();
 
-			descriptionGroup.gameObject.SetActive(true);
-			descriptionGroup.transform.localPosition = Vector3.zero;
-
-			principleGroup.gameObject.SetActive(false);
-			principleGroup.transform.localPosition = hidePos;
-
-			ageGroup.gameObject.SetActive(false);
-			ageGroup.transform.localPosition = hidePos;
-			countryGroup.gameObject.SetActive(false);
-			countryGroup.transform.localPosition = hidePos;
+			ageGroup.HideSync();
+			
+			countryGroup.HideSync();
 
 			imgPlayEnd.gameObject.SetActive(false);
 		}

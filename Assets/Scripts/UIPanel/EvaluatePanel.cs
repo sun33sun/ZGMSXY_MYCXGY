@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -25,28 +26,24 @@ namespace ZGMSXY_MYCXGY
 
             CancellationToken token = this.GetCancellationTokenOnDestroy();
 
-            btnBack.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+            btnBack.AddAwaitAction(async () =>
             {
-                Hide();
-                await UniTask.Delay(Settings.HideDelay);
-                UIKit.ShowPanel<MainPanel>();
-            }, token));
+                await this.HideAsyncPanel();
+                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+            });
 
-            btnNext.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnNext, async () =>
+            btnNext.AddAwaitAction(async () =>
             {
-                svSelfEvaluate.DOLocalMoveY(1080, 0.5f);
-                await UniTask.Delay(Settings.HideDelay);
-                svSelfEvaluate.gameObject.SetActive(false);
-                OtherModel.gameObject.SetActive(true);
-                OtherModel.DOLocalMoveY(0, 0.5f);
-            }, token));
+                await svSelfEvaluate.HideAsync();
+                await OtherModel.ShowAsync();
+            });
 
             for (int i = 0; i < togOtherModels.Count; i++)
             {
                 int index = i;
                 Image togImg = togOtherModels[i].GetComponent<Image>();
                 Image imgOtherModel = togOtherModels[i].transform.GetChild(0).GetComponent<Image>();
-                togOtherModels[i].onValueChanged.AddListener(isOn =>
+                togOtherModels[i].AddAwaitAction(isOn =>
                 {
                     if (isOn)
                     {
@@ -62,31 +59,26 @@ namespace ZGMSXY_MYCXGY
                     }
                 });
 
-                btnOtherModel_Selecteds[i].onClick.AddListener(Settings.GetButtonIgnoreClickFunc(
-                    btnOtherModel_Selecteds[i], async () =>
-                    {
-                        OtherModel.DOLocalMoveY(1080, 0.5f);
-                        await UniTask.Delay(Settings.HideDelay);
-                        togOtherModels[index].isOn = false;
-                        OtherModel.gameObject.SetActive(false);
-                        btnEnterEvaluate.gameObject.SetActive(true);
-                    }, token));
+                btnOtherModel_Selecteds[i].AddAwaitAction(async () =>
+                {
+                    await OtherModel.HideAsync();
+                    togOtherModels[index].isOn = false;
+                    btnEnterEvaluate.gameObject.SetActive(true);
+                });
             }
 
-            btnEnterEvaluate.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnEnterEvaluate,
-                async () =>
-                {
-                    svDoEvaluate.gameObject.SetActive(true);
-                    svDoEvaluate.DOLocalMoveY(-45, 0.5f);
-                    await UniTask.Delay(Settings.ShowDelay);
-                    btnEnterEvaluate.gameObject.SetActive(false);
-                }, token));
-            btnBackMain.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+            btnEnterEvaluate.AddAwaitAction(async () =>
             {
-                Hide();
-                await UniTask.Delay(Settings.HideDelay);
-                UIKit.ShowPanel<MainPanel>();
-            }, token));
+                svDoEvaluate.gameObject.SetActive(true);
+                await svDoEvaluate.DOLocalMoveY(-45, 0.5f).AsyncWaitForCompletion();
+                btnEnterEvaluate.gameObject.SetActive(false);
+            });
+
+            btnBackMain.AddAwaitAction(async () =>
+            {
+                await this.HideAsyncPanel();
+                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+            });
         }
 
         protected override void OnOpen(IUIData uiData = null)
@@ -95,19 +87,6 @@ namespace ZGMSXY_MYCXGY
 
         protected override void OnShow()
         {
-        }
-
-        protected override void OnHide()
-        {
-        }
-
-        protected override void OnClose()
-        {
-        }
-
-        public override void Show()
-        {
-            base.Show();
             svSelfEvaluate.gameObject.SetActive(true);
             svSelfEvaluate.localPosition = new Vector3(0, -45, 0);
             OtherModel.gameObject.SetActive(false);
@@ -123,11 +102,12 @@ namespace ZGMSXY_MYCXGY
             transform.DOLocalMoveY(0, 0.5f);
         }
 
-        public override async void Hide()
+        protected override void OnHide()
         {
-            transform.DOLocalMoveY(1080, 0.5f);
-            await UniTask.Delay(Settings.HideDelay);
-            base.Hide();
+        }
+
+        protected override void OnClose()
+        {
         }
     }
 }

@@ -4,76 +4,92 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QFramework;
 using UnityEngine;
 
 namespace ProjectBase
 {
-	public class ThirdPersonView : IPersonView
-	{
-		Transform m_transform;
-		public Transform transform
-		{
-			get => m_transform;
-			set
-			{
-				m_transform = value;
-				cam = m_transform.GetComponent<CinemachineVirtualCamera>();
-				target = cam.Follow;
-			}
-		}
-		PersonViewField pvField;
-		public PersonViewField PvField { get => pvField; set { pvField = value; } }
-		CinemachineVirtualCamera cam;
-		Transform target;
+    public class ThirdPersonView : IPersonView
+    {
+        public Transform transform
+        {
+            get => cam.transform;
+            set
+            {
+                cam = value.GetComponent<CinemachineVirtualCamera>();
+                if (cam.Follow != null)
+                {
+                    _player = cam.Follow.GetOrAddComponent<PlayerController>();
+                    _player._Camera = cam.transform;
+                }
+            }
+        }
 
-		public ThirdPersonView(Transform transform)
-		{
-			this.transform = transform;
-			pvField.moveSpeed = 3;
-			pvField.upSpeed = 2;
-			pvField.rotateSpeed = 3;
-			pvField.viewSpeed = 10;
-		}
+        PersonViewField pvField;
 
-		public void UpdateVelocity(Vector2 dir)
-		{
-			//m_transform.rotation = Quaternion.Lerp(Quaternion.identity, m_transform.rotation,Time.deltaTime);
-		}
+        public PersonViewField PvField
+        {
+            get => pvField;
+            set { pvField = value; }
+        }
 
-		public void Reset()
-		{
-			pvField.moveSpeed = 3;
-			pvField.upSpeed = 2;
-			pvField.rotateSpeed = 3;
-			pvField.viewSpeed = 10;
-		}
+        CinemachineVirtualCamera cam;
+        private PlayerController _player;
 
-		public void OnMouseSliding(Vector2 slidingValue)
-		{
-			m_transform.rotation = Quaternion.AngleAxis(-slidingValue.y, m_transform.right) * Quaternion.AngleAxis(slidingValue.x, m_transform.up) * m_transform.rotation;
-			Vector3 euler = m_transform.transform.localEulerAngles;
-			if (euler.z != 0)
-			{
-				euler.z = 0;
-				m_transform.transform.localEulerAngles = euler;
-			}
-		}
+        public PlayerController Player
+        {
+            set
+            {
+                _player = value;
+                cam.Follow = _player.transform;
+                cam.transform.position = cam.Follow.position;
+                _player._Camera = cam.transform;
+            }
+        }
 
-		public void OnEState()
-		{
-		}
+        public ThirdPersonView(CinemachineVirtualCamera cam, PersonViewField pvField)
+        {
+            this.cam = cam;
+            this.pvField = pvField;
+        }
 
-		public void OnQState()
-		{
-		}
+        public void UpdateMovement(Vector2 dir)
+        {
+            if (_player != null)
+                _player.UpdateMovement(dir);
+        }
 
-		public void OnMouseScrollWheel(float distance)
-		{
-			cam.m_Lens.FieldOfView += distance * pvField.viewSpeed;
-			if (cam.m_Lens.FieldOfView < 1)
-				cam.m_Lens.FieldOfView = 1;
-			else if (cam.m_Lens.FieldOfView > 90)
-				cam.m_Lens.FieldOfView = 90;
-		}
-	}
+        public void Reset()
+        {
+        }
+
+        public void OnMouseSliding(Vector2 slidingValue)
+        {
+            cam.transform.rotation = Quaternion.AngleAxis(-slidingValue.y, cam.transform.right) *
+                                     Quaternion.AngleAxis(slidingValue.x, cam.transform.up) * cam.transform.rotation;
+            Vector3 euler = cam.transform.transform.localEulerAngles;
+            if (euler.z != 0)
+            {
+                euler.z = 0;
+                cam.transform.transform.localEulerAngles = euler;
+            }
+        }
+
+        public void OnEState()
+        {
+        }
+
+        public void OnQState()
+        {
+        }
+
+        public void OnMouseScrollWheel(float distance)
+        {
+            cam.m_Lens.FieldOfView += distance * pvField.viewSpeed;
+            if (cam.m_Lens.FieldOfView < 1)
+                cam.m_Lens.FieldOfView = 1;
+            else if (cam.m_Lens.FieldOfView > 90)
+                cam.m_Lens.FieldOfView = 90;
+        }
+    }
 }

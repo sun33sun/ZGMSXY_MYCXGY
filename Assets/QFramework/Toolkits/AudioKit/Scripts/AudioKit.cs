@@ -225,7 +225,7 @@ AudioKit.PlaySound(EnemyDieClip);
 ")]
 #endif
         public static AudioPlayer PlaySound(string soundName, bool loop = false, Action<AudioPlayer> callBack = null,
-            int customEventId = -1)
+            int customEventId = -1,float volumeScale = 1.0f)
         {
             AudioManager.Instance.CheckAudioListener();
             if (!Settings.IsSoundOn.Value) return null;
@@ -234,7 +234,7 @@ AudioKit.PlaySound(EnemyDieClip);
 
             soundPlayer.SetOnStartListener(player =>
             {
-                player.SetVolume(Settings.SoundVolume.Value);
+                player.SetVolume(Settings.SoundVolume.Value * volumeScale);
                 soundPlayer.SetOnStartListener(null);
             });
             soundPlayer.SetAudio(AudioManager.Instance.gameObject, soundName, loop);

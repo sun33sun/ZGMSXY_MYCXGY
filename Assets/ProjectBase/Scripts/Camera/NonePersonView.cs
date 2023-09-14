@@ -15,7 +15,7 @@ namespace ProjectBase
 		PersonViewField pvField;
 		public PersonViewField PvField { get => pvField; set { pvField = value; } }
 
-		public void UpdateVelocity(Vector2 dir)
+		public void UpdateMovement(Vector2 dir)
 		{
 			
 		}

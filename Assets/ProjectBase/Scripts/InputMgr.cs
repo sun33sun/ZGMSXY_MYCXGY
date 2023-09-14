@@ -70,15 +70,13 @@ namespace ProjectBase
             EventCenter.GetInstance().EventTrigger<Vector2>("鼠标滑动", new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
 
             EventCenter.GetInstance().EventTrigger<float>("鼠标滚轮", Input.GetAxis("Mouse ScrollWheel"));
-            EventCenter.GetInstance().EventTrigger<Vector2>("移动方向", new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
-
         }
 
         private void MyFixedUpdate()
 		{
             if (!isStartFixedUpdate)
                 return;
-
+            EventCenter.GetInstance().EventTrigger<Vector2>("移动方向", new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
             CheckKeyCode(KeyCode.Space);
             CheckKeyCode(KeyCode.LeftControl);
         }

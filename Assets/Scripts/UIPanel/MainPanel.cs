@@ -7,114 +7,117 @@ using UnityEngine.Events;
 using System;
 using DG.Tweening;
 using System.Threading;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
-	public class MainPanelData : UIPanelData
-	{
-	}
-	public partial class MainPanel : UIPanel
-	{
-		protected override void OnInit(IUIData uiData = null)
-		{
-			mData = uiData as MainPanelData ?? new MainPanelData();
+    public class MainPanelData : UIPanelData
+    {
+    }
 
-			CancellationToken token = this.GetCancellationTokenOnDestroy();
+    public partial class MainPanel : UIPanel
+    {
+        public Image imgBk;
+        protected override void OnInit(IUIData uiData = null)
+        {
+            mData = uiData as MainPanelData ?? new MainPanelData();
 
-			btnStart.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnStart, async () =>
-			{
-				objStart.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				objStart.gameObject.SetActive(false);
-				ButtonGroup.gameObject.SetActive(true);
-				ButtonGroup.DOLocalMoveY(0, 0.5f);
-				tmpModuleName.gameObject.SetActive(true);
-			}, token));
+            CancellationToken token = this.GetCancellationTokenOnDestroy();
 
-			btnKnowledge.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnKnowledge, async () =>
-			{
-				ButtonGroup.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				ButtonGroup.gameObject.SetActive(false);
-				SecondButtonGroup.gameObject.SetActive(true);
-				SecondButtonGroup.DOLocalMoveY(0, 0.5f);
-			}, token));
+            btnStart.AddAwaitAction(async () =>
+            {
+                await objStart.HideAsync();
+                await ButtonGroup.ShowAsync();
+                tmpModuleName.gameObject.SetActive(true);
+            });
 
-			btnMaterial.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnMaterial, async () =>
-			{
-				Hide();
-				await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
-				KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
-				knowledgePanel.objMaterial.Show();
-				knowledgePanel.Show();
-			}, token));
+            btnPreview.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.WaitUntil(() => !ButtonGroup.gameObject.activeInHierarchy);
+                await UIKit.GetPanel<PreviewPanel>().ShowAsyncPanel();
+            });
 
-			btnTool.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnTool, async () =>
-			 {
-				 Hide();
-				 await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
-				 KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
-				 knowledgePanel.objTool.Show();
-				 knowledgePanel.Show();
-			 }, token));
+            btnKnowledge.AddAwaitAction(async () =>
+            {
+                await ButtonGroup.HideAsync();
+                await SecondButtonGroup.ShowAsync();
+            });
 
-			btnLearn.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnLearn, async () =>
-			 {
-				 Hide();
-				 await UniTask.Delay(Settings.HideDelay);
-				 UIKit.ShowPanel<LearnPanel>();
-			 }, token));
+            btnMaterial.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
+                KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
+                knowledgePanel.objMaterial.Show();
+                await knowledgePanel.ShowAsyncPanel();
+            });
 
-			btninteraction.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btninteraction, async () =>
-			{
-				Hide();
-				await UniTask.Delay(Settings.HideDelay);
-				UIKit.ShowPanel<InteractionPanel>();
-			}, token));
+            btnTool.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
+                KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
+                knowledgePanel.objTool.Show();
+                await knowledgePanel.ShowAsyncPanel();
+            });
 
-			btnReport.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnReport, async () =>
-			{
-				Hide();
-				await UniTask.Delay(Settings.HideDelay);
-				UIKit.ShowPanel<ReportPanel>();
-			}, token));
-		}
+            btnLearn.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.Delay(Settings.HideDelay);
+                await UIKit.GetPanel<LearnPanel>().ShowAsyncPanel();
+            });
 
-		protected override void OnOpen(IUIData uiData = null)
-		{
-		}
+            btninteraction.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.Delay(Settings.HideDelay);
+                await UIKit.GetPanel<InteractionPanel>().ShowAsyncPanel();
+            });
 
-		protected override void OnShow()
-		{
-		}
+            btnReport.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.Delay(Settings.HideDelay);
+                await UIKit.GetPanel<ReportPanel>().ShowAsyncPanel();
+            });
+        }
 
-		protected override void OnHide()
-		{
+        protected override void OnOpen(IUIData uiData = null)
+        {
+        }
 
-		}
+        protected override void OnShow()
+        {
+        }
 
-		protected override void OnClose()
-		{
-		}
+        protected override void OnHide()
+        {
+        }
 
-		public override async void Show()
-		{
-			base.Show();
-			ButtonGroup.gameObject.SetActive(true);
-			ButtonGroup.DOLocalMoveY(0, 0.5f);
-			tmpModuleName.gameObject.SetActive(true);
-		}
+        protected override void OnClose()
+        {
+        }
 
-		public override async void Hide()
-		{
-			tmpModuleName.gameObject.SetActive(false);
-			if (ButtonGroup.gameObject.activeInHierarchy)
-				ButtonGroup.DOLocalMoveY(1080, 0.5f);
-			else if (SecondButtonGroup.gameObject.activeInHierarchy)
-				SecondButtonGroup.DOLocalMoveY(1080, 0.5f);
-			await UniTask.Delay(Settings.ShowDelay);
-			ButtonGroup.gameObject.SetActive(false);
-			SecondButtonGroup.gameObject.SetActive(false);
-		}
-	}
+        public override async void Show()
+        {
+            base.Show();
+            ButtonGroup.gameObject.SetActive(true);
+            ButtonGroup.DOLocalMoveY(0, 0.5f);
+            tmpModuleName.gameObject.SetActive(true);
+        }
+
+        public override async void Hide()
+        {
+            tmpModuleName.gameObject.SetActive(false);
+            if (ButtonGroup.gameObject.activeInHierarchy)
+                ButtonGroup.DOLocalMoveY(1080, 0.5f);
+            else if (SecondButtonGroup.gameObject.activeInHierarchy)
+                SecondButtonGroup.DOLocalMoveY(1080, 0.5f);
+            await UniTask.Delay(Settings.ShowDelay);
+            ButtonGroup.gameObject.SetActive(false);
+            SecondButtonGroup.gameObject.SetActive(false);
+        }
+    }
 }

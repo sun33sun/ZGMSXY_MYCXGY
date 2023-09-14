@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:3d9d062d-b369-4415-90aa-ced30a271922
+	// Generate Id:1f96df6e-bacf-4925-a117-7d1fdd5e7726
 	public partial class KnowledgePanel
 	{
 		public const string Name = "KnowledgePanel";

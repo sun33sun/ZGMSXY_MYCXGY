@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Setting
   m_EditorClassIdentifier: 
   Namespace: ZGMSXY_MYCXGY
-  ScriptDir: Assets/Scripts/UIPanel
-  PrefabDir: /Prefab/UIPanel
+  ScriptDir: Assets/Scripts/Game
+  PrefabDir: /Resources/GamePrefab

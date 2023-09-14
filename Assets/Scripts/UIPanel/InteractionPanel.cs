@@ -6,170 +6,155 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
-	public class InteractionPanelData : UIPanelData
-	{
-	}
-	public partial class InteractionPanel : UIPanel
-	{
-		List<GameObject> groups = new List<GameObject>();
-		CancellationTokenSource cts;
+    public class InteractionPanelData : UIPanelData
+    {
+        public SelectMaterial.MaterialType MaterialType;
+        public SelectCase.CaseType CaseType;
+    }
 
-		protected override void OnInit(IUIData uiData = null)
-		{
-			InitGroups();
+    public partial class InteractionPanel : UIPanel
+    {
+        List<GameObject> groups = new List<GameObject>();
+        private CancellationTokenSource cts;
+        
 
-			mData = uiData as InteractionPanelData ?? new InteractionPanelData();
+        protected override void OnInit(IUIData uiData = null)
+        {
+            InitGroups();
+            cts = new CancellationTokenSource();
+            mData = uiData as InteractionPanelData ?? new InteractionPanelData();
 
-			CancellationToken token = this.GetCancellationTokenOnDestroy();
+            btnBack.AddAwaitAction(async () =>
+            {
+                await this.HideAsyncPanel();
+                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+            });
 
-			btnBack.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
-			{
-				Hide();
-				await UniTask.WaitUntil(() => !gameObject.activeInHierarchy);
-				UIKit.GetPanel<MainPanel>().Show();
-			}, token));
+            // btnCancelNext.AddAwaitAction(async () =>
+            // {
+            //     materialGroup.transform.DOLocalMoveY(-800, ExtensionFunction.ShowTime);
+            //     await imgNext.HideAsync();
+            //     materialGroup.gameObject.SetActive(false);
+            //     NextState();
+            //     GameManager.Instance.gameObject.SetActive(true);
+            //     UniTask.Void(async t =>
+            //     {
+            //         await GameManager.Instance.WaitClickCube();
+            //         imgPlayRealVideo.ShowAsync().Forget();
+            //     }, cts.Token);
+            // });
+            
+            btnConfirmNext.AddAwaitAction(async () =>await imgNext.HideAsync());
 
-			btnConfirmNext.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmNext, async () =>
-			{
-				imgNext.transform.DOLocalMoveY(1080, 0.5f);
-				materialGroup.transform.DOLocalMoveY(-800, 0.4f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgNext.gameObject.SetActive(false);
-				materialGroup.gameObject.SetActive(false);
-				NextState();
-				ModelRoot.Instance.gameObject.SetActive(true);
-				UniTask.Void(async t => { 
-					await ModelRoot.Instance.WaitClickCube();
-					imgPlayRealVideo.gameObject.SetActive(true);
-					imgPlayRealVideo.transform.DOLocalMoveY(0, 0.5f);
-				}, cts.Token);
-			}, token));
+            btnConfirmPlayRealVideo.AddAwaitAction(async () =>
+            {
+                await imgPlayRealVideo.HideAsync();
+                NextState();
+                vpRealVideo.gameObject.SetActive(true);
+                vpRealVideo.Play();
+                await UniTask.Yield(PlayerLoopTiming.Update);
+                UniTask.Void(async t =>
+                {
+                    await UniTask.WaitUntil(() => !vpRealVideo.isPlaying,
+                        cancellationToken: this.GetCancellationTokenOnDestroy());
+                    vpRealVideo.gameObject.SetActive(false);
+                    imgSubmitModel.ShowAsync().Forget();
+                }, this);
+            });
 
-			btnCancelNext.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelNext, async () =>
-			{
-				imgNext.transform.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgNext.gameObject.SetActive(false);
-			}, token));
+            btnCancelPlayRealVideo.AddAwaitAction(async () =>
+            {
+                await imgPlayRealVideo.HideAsync();
+                NextState();
+                await imgSubmitModel.ShowAsync();
+            });
 
-			btnConfirmPlayRealVideo.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmPlayRealVideo, async () =>
-			{
-				imgPlayRealVideo.transform.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgPlayRealVideo.gameObject.SetActive(false);
-				NextState();
-				vpRealVideo.gameObject.SetActive(true);
-				vpRealVideo.Play();
-				await UniTask.Yield(PlayerLoopTiming.Update);
-				UniTask.Void(async t => {
-					await UniTask.WaitUntil(() => !vpRealVideo.isPlaying);
-					vpRealVideo.gameObject.SetActive(false);
-					imgSubmitModel.gameObject.SetActive(true);
-					imgSubmitModel.DOLocalMoveY(0, 0.5f);
-				}, cts.Token);
-			}, token));
+            btnConfirmSubmitModel.AddAwaitAction(async () =>
+            {
+                await this.HideAsyncPanel();
+                await UIKit.GetPanel<EvaluatePanel>().ShowAsyncPanel();
+            });
 
-			btnCancelPlayRealVideo.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelPlayRealVideo, async () =>
-			{
-				imgPlayRealVideo.transform.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgPlayRealVideo.gameObject.SetActive(false);
-				NextState();
-				imgSubmitModel.gameObject.SetActive(true);
-				imgSubmitModel.DOLocalMoveY(0, 0.5f);
-			}, token));
+            btnCancelSubmitModel.AddAwaitAction(async () =>
+            {
+                await imgSubmitModel.HideAsync();
+                btnEnterEvaluate.gameObject.SetActive(true);
+            });
 
-			btnConfirmSubmitModel.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmSubmitModel, async () =>
-			{
-				Hide();
-				await UniTask.Delay(Settings.HideDelay);
-				UIKit.ShowPanel<EvaluatePanel>();
-			}, token));
+            btnEnterEvaluate.AddAwaitAction(async () =>
+            {
+                await imgSubmitModel.ShowAsync();
+                btnEnterEvaluate.gameObject.SetActive(false);
+            });
 
-			btnCancelSubmitModel.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelSubmitModel, async () =>
-			{
-				imgSubmitModel.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgSubmitModel.gameObject.SetActive(false);
-				btnEnterEvaluate.gameObject.SetActive(true);
-			}, token));
+            SubscribeUIElements();
+        }
 
-			btnEnterEvaluate.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnEnterEvaluate, async () =>
-			{
-				imgSubmitModel.gameObject.SetActive(true);
-				imgSubmitModel.DOLocalMoveY(0, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				btnEnterEvaluate.gameObject.SetActive(false);
-			}, token));
-		}
+        void SubscribeUIElements()
+        {
+            SelectMaterial.OnConfirmMaterial += selectedMaterial =>
+            {
+                mData.MaterialType = selectedMaterial;
+                SelectCase.ShowAwaitUIElement();
+            };
+            SelectCase.OnConfirmCase += selectedCase =>
+            {
+                mData.CaseType = selectedCase;
+                toolSelections.ShowAwaitUIElement();
+                GameManager.Instance.StartTask(mData.MaterialType,mData.CaseType);
+            };
+        }
+        
+        void InitGroups()
+        {
+            // groups.Add(materialGroup.gameObject);
+        }
 
-		void InitGroups() 
-		{
-			groups.Add(materialGroup.gameObject);
+        protected override void OnOpen(IUIData uiData = null)
+        {
+        }
 
-		}
+        protected override void OnShow()
+        {
+            UIKit.GetPanel<MainPanel>().imgBk.enabled = false;
+            CameraManager.Instance.SwitchRenderTexture(false);
+            cts = new CancellationTokenSource();
+            vpRealVideo.gameObject.SetActive(false);
+            imgNext.HideSync();
+            imgPlayRealVideo.HideSync();
+            imgSubmitModel.HideSync();
+            btnEnterEvaluate.gameObject.SetActive(false);
+            SelectMaterial.ShowSync();
+            SelectCase.HideSync();
+            toolSelections.HideSync();
+        }
 
-		private void OnEnable()
-		{
-			cts = new CancellationTokenSource();
-		}
+        protected override void OnHide()
+        {
+            UIKit.GetPanel<MainPanel>().imgBk.enabled = true;
+            vpRealVideo.Stop();
+            cts.Cancel();
+        }
 
-		private void OnDisable()
-		{
-			if(cts != null)
-			{
-				cts.Cancel();
-				cts.Dispose();
-			}
-		}
+        protected override void OnClose()
+        {
+        }
 
+        public void NextState()
+        {
+            taskSchedule.NextState();
+        }
 
-		protected override void OnOpen(IUIData uiData = null)
-		{
-		}
-		
-		protected override void OnShow()
-		{
-		}
-		
-		protected override void OnHide()
-		{
-		}
-		
-		protected override void OnClose()
-		{
-		}
-
-		public override async void Show()
-		{
-			base.Show();
-			vpRealVideo.gameObject.SetActive(false);
-			materialGroup.transform.localPosition = new Vector3(20, -421, 0);
-			materialGroup.gameObject.SetActive(true);
-			imgNext.gameObject.SetActive(false);
-			imgNext.transform.localPosition = new Vector3(0, 1080, 0);
-			imgPlayRealVideo.gameObject.SetActive(false);
-			imgPlayRealVideo.transform.localPosition = new Vector3(0, 1080, 0);
-			imgSubmitModel.gameObject.SetActive(false);
-			imgSubmitModel.transform.localPosition = new Vector3(0, 1080, 0);
-			btnEnterEvaluate.gameObject.SetActive(false);
-			transform.DOLocalMoveY(0, 0.5f);
-		}
-
-		public override async void Hide()
-		{
-			vpRealVideo.Stop();
-			transform.DOLocalMoveY(1080, 0.5f);
-			await UniTask.Delay(Settings.HideDelay);
-			base.Hide();
-		}
-
-		public void NextState()
-		{
-			taskSchedule.NextState();
-		}
-	}
+        public async UniTask WaitNext()
+        {
+            UIRoot.Instance.GraphicRaycaster.enabled = false;
+            await imgNext.ShowAsync();
+            UIRoot.Instance.GraphicRaycaster.enabled = true;
+            await btnConfirmNext.OnClickAsync(cts.Token);
+        }
+    }
 }

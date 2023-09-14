@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:2c45554a-ea7c-4f34-8239-9fb9f02422a4
+	// Generate Id:fd363f3f-5263-45fa-9d8b-6b47150f1e7f
 	public partial class MainPanel
 	{
 		public const string Name = "MainPanel";
@@ -18,6 +18,8 @@ namespace ZGMSXY_MYCXGY
 		public UnityEngine.UI.Button btnStart;
 		[SerializeField]
 		public RectTransform ButtonGroup;
+		[SerializeField]
+		public UnityEngine.UI.Button btnPreview;
 		[SerializeField]
 		public UnityEngine.UI.Button btnKnowledge;
 		[SerializeField]
@@ -41,6 +43,7 @@ namespace ZGMSXY_MYCXGY
 			objStart = null;
 			btnStart = null;
 			ButtonGroup = null;
+			btnPreview = null;
 			btnKnowledge = null;
 			btnLearn = null;
 			btninteraction = null;

@@ -10,6 +10,7 @@ using QFramework;
 using System.Threading;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -19,32 +20,21 @@ namespace ZGMSXY_MYCXGY
 
         private void Awake()
         {
-            CancellationToken token = this.GetCancellationTokenOnDestroy();
-
             for (int i = 0; i < togMaterials.Count; i++)
             {
-                Func<bool> funcMaterials = Settings.GetToggleAnimatorEndFunc(togMaterials[i]);
-                togMaterials[i].onValueChanged.AddListener(async isOn =>
+                togMaterials[i].AddAwaitAction(async isOn=>
                 {
-                    if (token.IsCancellationRequested) return;
                     if (isOn)
                     {
-                        UIRoot.Instance.GraphicRaycaster.enabled = false;
-                        await UniTask.WaitUntil(funcMaterials);
                         RectTransform rect = UIKit.GetPanel<InteractionPanel>().imgNext;
                         rect.gameObject.SetActive(true);
-                        rect.DOLocalMoveY(0, 0.5f);
-                        await UniTask.Delay(Settings.HideDelay);
-                        UIRoot.Instance.GraphicRaycaster.enabled = true;
-                    }
-                    else
-                    {
+                        await rect.DOLocalMoveY(0, 0.5f).AsyncWaitForCompletion();
                     }
                 });
             }
-
+			
             float maxDistance = ((togMaterials.Count - 5) / 2) * 140;
-            btnLeftCountry.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnLeftCountry, async () =>
+            btnLeftCountry.AddAwaitAction(async () =>
             {
                 float nowX = Content.localPosition.x;
                 if (nowX > -maxDistance)
@@ -52,8 +42,8 @@ namespace ZGMSXY_MYCXGY
                     Content.DOLocalMoveX(nowX - 140, 0.1f);
                     await UniTask.Delay(Settings.smallDelay);
                 }
-            }, token));
-            btnRightcountry.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnRightcountry, async () =>
+            });
+            btnRightcountry.AddAwaitAction(async () =>
             {
                 float nowX = Content.localPosition.x;
                 if (nowX < maxDistance)
@@ -61,7 +51,7 @@ namespace ZGMSXY_MYCXGY
                     Content.DOLocalMoveX(nowX + 140, 0.1f);
                     await UniTask.Delay(Settings.smallDelay);
                 }
-            }, token));
+            });
         }
 
         protected override void OnBeforeDestroy()

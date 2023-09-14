@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
@@ -46,9 +45,7 @@ public class QuestionController
     [MultilineAttribute] 
     public string _题目;
     public Dictionary<MyChoiceIndex,string> _选项 = new Dictionary<MyChoiceIndex, string>();
-    [HideIf("_选项类型",MyChoice.单选)]
     public List<MyChoiceIndex> _多选正确答案 = new List<MyChoiceIndex>();
-    [HideIf("_选项类型",MyChoice.多选)]
     public MyChoiceIndex _单选或判断正确答案;
 
     public float _分值;

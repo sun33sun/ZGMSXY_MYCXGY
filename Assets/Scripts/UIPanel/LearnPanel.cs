@@ -6,91 +6,139 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using System;
+using System.ComponentModel;
 using System.Linq;
+using ProjectBase;
+using UnityEngine.Serialization;
 
 namespace ZGMSXY_MYCXGY
 {
+	[Serializable]
+	public class CraftRes
+	{
+		public enum CraftType
+		{
+			[Description("锯切")]
+			Sawing,
+			[Description("带切")]
+			Bandcut,
+			[Description("车削")]
+			Turnery,
+			[Description("钻削")]
+			Drilling,
+			[Description("铣削")]			
+			Milling,
+			[Description("磨削")]
+			Grinding,
+			[Description("凿削")]
+			Chiseling,
+			[Description("刨削")]
+			Slicing,
+		}
+
+		public CraftType craftType;
+		public string description;
+		public Toggle tog;
+	}
+	
 	public class LearnPanelData : UIPanelData
 	{
 	}
 	public partial class LearnPanel : UIPanel
 	{
-		[SerializeField] List<Toggle> craftItems;
 		Vector2 bigSize = new Vector2(240, 240);
 		Vector2 smallSize = new Vector2(190, 190);
+		[Header("开关对应的资源")]
+		[SerializeField] private List<CraftRes> craftRess;
+		
+		private int selectedIndex = 0;
 		
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as LearnPanelData ?? new LearnPanelData();
 
-			CancellationToken token = this.GetCancellationTokenOnDestroy();
-
-			for (int i = 0; i < craftItems.Count; i++)
+			//选择工艺环节页面
+			btnBack.AddAwaitAction(async () =>
+			{
+				await this.HideAsyncPanel();
+				await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+			});
+			for (int i = 0; i < craftRess.Count; i++)
 			{
 				int index = i;
-				Func<bool> principleItemsFunc = Settings.GetToggleAnimatorEndFunc(craftItems[i]);
-				RectTransform rect = craftItems[i].transform as RectTransform;
-				craftItems[i].onValueChanged.AddListener(async isOn =>
+				RectTransform rect = craftRess[i].tog.transform as RectTransform;
+				craftRess[i].tog.AddAwaitAction(isOn =>
 				{
-					if (token.IsCancellationRequested) return;
 					if (isOn)
 					{
-						UIRoot.Instance.GraphicRaycaster.enabled = false;
-						await UniTask.WaitUntil(principleItemsFunc);
+						selectedIndex = index;
 						rect.sizeDelta = bigSize;
-						LayoutRebuilder.ForceRebuildLayoutImmediate(hlgCraft);
-						UIRoot.Instance.GraphicRaycaster.enabled = true;
+						tmpCraftName.text = "木材的" + craftRess[index].craftType.GetDescription();
+						tmpCraftDescription.text = craftRess[index].description;
 					}
 					else
 					{
 						rect.sizeDelta = smallSize;
 					}
+					LayoutRebuilder.ForceRebuildLayoutImmediate(hlgCraft);
 				});
 			}
-
-			btnBack.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnBack, async () =>
+			btnConfirmCraft.AddAwaitAction(async () =>
 			{
-				Hide();
-				await UniTask.Delay(Settings.HideDelay);
-				UIKit.ShowPanel<MainPanel>();
-			}, token));
-
-			btnConfirmCraft.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmCraft, async () =>
-			 {
-				 imgPlayEnd.gameObject.SetActive(true);
-				 imgPlayEnd.DOLocalMoveY(0, 0.5f);
-				 await UniTask.Delay(Settings.HideDelay);
-			 }, token));
+				await imgAnimation.ShowAsync();
+				GameManager.Instance.StartLearnAnimation(craftRess[selectedIndex].craftType);
+			});
+			//工艺动画页面
+			btnConfirmAnimation.AddAwaitAction(async () =>await imgAnimationEnd.ShowAsync());
+			btnCancelAnimation.AddAwaitAction(async () =>
+			{
+				GameManager.Instance.EndLearnAnimation(craftRess[selectedIndex].craftType);
+				imgAnimation.HideSync();
+				await imgAnimationEnd.HideAsync();
+			});
 			
-			btnPlayEnd.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnPlayEnd, async () =>
+			btnEnterExamination.AddAwaitAction(async () =>
 			{
-				imgPlayEnd.DOLocalMoveY(1080, 0.5f);
-				objCraft.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				titleGroup.gameObject.SetActive(true);
-				titleGroup.DOLocalMoveY(0, 0.5f);
-			}, token));
-
-			btnSubmitTitle.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnSubmitTitle, async () =>
+				await objCraft.HideAsync();
+				imgAnimation.HideSync();
+				imgAnimationEnd.HideSync();
+				await titleGroup.ShowAsync();
+			});
+			//题目页面
+			btnConfirmTitle.AddAwaitAction(async () =>
 			{
-				imgPlay.gameObject.SetActive(true);
-				imgPlay.DOLocalMoveY(0, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-			}, token));
-
-			btnConfirmPlay.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnConfirmPlay, async () =>
+				await imgDoubleConfirmTitle.ShowAsync();
+			});
+			btnDoubleConfirmTitle.AddAwaitAction(async () =>
 			{
-				Hide();
-				await UniTask.WaitUntil(() => !gameObject.activeInHierarchy);
-				UIKit.GetPanel<MainPanel>().Show();
-			}, token));
-
-			btnCancelPlay.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnCancelPlay, async () =>
+				await imgDoubleConfirmTitle.HideAsync();
+				btnSubmitTitle.gameObject.SetActive(true);
+			});
+			btnDoubleCancelTitle.AddAwaitAction(async ()=>await imgDoubleConfirmTitle.HideAsync());
+			btnSubmitTitle.AddAwaitAction(async () =>
 			{
-				imgPlay.DOLocalMoveY(1080, 0.5f);
-				await UniTask.Delay(Settings.HideDelay);
-				imgPlay.gameObject.SetActive(false);
-			}, token));
+				await titleGroup.HideAsync();
+				await imgPlay.ShowAsync();
+			});
+			//是否进入整体流程视频页面
+			btnConfirmPlay.AddAwaitAction(async () =>
+			{
+				await imgPlay.HideAsync();
+				await vpVideo.ShowAsync();
+				vpVideo.Play();
+			});
+			btnCancelPlay.AddAwaitAction(async () =>
+			{
+				await imgPlay.HideAsync();
+				await objCraft.ShowAsync();
+			});
+			//整体流程视频页面
+			btnCloseVideo.AddAwaitAction(async () =>
+			{
+				vpVideo.Stop();
+				await this.HideAsyncPanel();
+				await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+			});
 		}
 
 		protected override void OnOpen(IUIData uiData = null)
@@ -99,43 +147,33 @@ namespace ZGMSXY_MYCXGY
 
 		protected override void OnShow()
 		{
+			objCraft.ShowSync();
+			imgAnimationEnd.HideSync();
+			titleGroup.HideSync();
+			imgAnimation.HideSync();
+			imgPlay.HideSync();
+			vpVideo.HideSync();
+			imgDoubleConfirmTitle.HideSync();
+			foreach (var craftItem in craftRess)
+			{
+				if (craftItem.tog.isOn)
+					craftItem.tog.isOn = false;
+			}
+			craftRess[0].tog.isOn = true;
+			tmpCraftName.text = "木材的"+craftRess[0].craftType.GetDescription();
+			tmpCraftDescription.text = craftRess[0].description;
+			//资源状态重置
+			selectedIndex = 0;
+			btnSubmitTitle.gameObject.SetActive(false);
 		}
 
 		protected override void OnHide()
 		{
+			GameManager.Instance.EndLearnAnimation(craftRess[selectedIndex].craftType);
 		}
 
 		protected override void OnClose()
 		{
-		}
-
-		public override void Show()
-		{
-			base.Show();
-			Vector3 hidePos = new Vector3(0, 1080, 0);
-
-			objCraft.gameObject.SetActive(true);
-			objCraft.localPosition = Vector3.zero;
-			imgPlayEnd.gameObject.SetActive(false);
-			imgPlayEnd.localPosition = hidePos;
-			titleGroup.gameObject.SetActive(false);
-			titleGroup.localPosition = hidePos;
-			imgPlay.gameObject.SetActive(false);
-			imgPlay.localPosition = hidePos;
-			foreach (var craftItem in craftItems)
-			{
-				if (craftItem.isOn)
-					craftItem.isOn = false;
-			}
-			craftItems[0].isOn = true;
-			transform.DOLocalMoveY(0, 0.5f);
-		}
-
-		public override async void Hide()
-		{
-			transform.DOLocalMoveY(1080, 0.5f);
-			await UniTask.Delay(Settings.HideDelay);
-			base.Hide();
 		}
 	}
 }

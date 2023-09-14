@@ -25,34 +25,34 @@
 
 namespace QFramework
 {
-	using UnityEngine;
+    using UnityEngine;
 
-	/// <summary>
-	/// belone to a panel 
-	/// </summary>
-	public abstract class UIElement : QMonoBehaviour, IBindOld
-	{
-		public virtual BindType GetBindType()
-		{
-			return BindType.Element;
-		}
+    /// <summary>
+    /// belone to a panel 
+    /// </summary>
+    public abstract class UIElement : QMonoBehaviour,IBindOld
+    {
+        public virtual BindType GetBindType()
+        {
+            return BindType.Element;
+        }
+        
+        public virtual string TypeName => ComponentName;
+        public abstract string ComponentName { get; }
 
-		public virtual string TypeName => ComponentName;
-		public abstract string ComponentName { get; }
+        public string Comment
+        {
+            get { return string.Empty; }
+        }
 
-		public string Comment
-		{
-			get { return string.Empty; }
-		}
+        public Transform Transform
+        {
+            get { return transform; }
+        }
 
-		public Transform Transform
-		{
-			get { return transform; }
-		}
-
-		public override IManager Manager
-		{
-			get { return UIManager.Instance; }
-		}
-	}
+        public override IManager Manager
+        {
+            get { return UIManager.Instance; }
+        }
+    }
 }

@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using UnityEngine.Serialization;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:fbc005f8-3602-4c69-baae-4963375e703e
+	// Generate Id:ae723b28-552c-46c0-8ea8-3689585ffbd7
 	public partial class InteractionPanel
 	{
 		public const string Name = "InteractionPanel";
@@ -17,7 +18,11 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField]
 		public TaskSchedule taskSchedule;
 		[SerializeField]
-		public MaterialGroup materialGroup;
+		public SelectMaterial SelectMaterial;
+		[SerializeField]
+		public SelectCase SelectCase;
+		[FormerlySerializedAs("MaterialDrilling")] [SerializeField]
+		public ToolSelections toolSelections;
 		[SerializeField]
 		public UnityEngine.RectTransform imgNext;
 		[SerializeField]
@@ -38,6 +43,10 @@ namespace ZGMSXY_MYCXGY
 		public UnityEngine.UI.Button btnCancelSubmitModel;
 		[SerializeField]
 		public UnityEngine.UI.Button btnEnterEvaluate;
+		[SerializeField]
+		public UnityEngine.UI.Button btnEnterWorksLibrary;
+		[SerializeField]
+		public LastMaterialSelect LastMaterialSelect;
 		
 		private InteractionPanelData mPrivateData = null;
 		
@@ -46,7 +55,9 @@ namespace ZGMSXY_MYCXGY
 			vpRealVideo = null;
 			btnBack = null;
 			taskSchedule = null;
-			materialGroup = null;
+			SelectMaterial = null;
+			SelectCase = null;
+			toolSelections = null;
 			imgNext = null;
 			btnConfirmNext = null;
 			btnCancelNext = null;
@@ -57,6 +68,8 @@ namespace ZGMSXY_MYCXGY
 			btnConfirmSubmitModel = null;
 			btnCancelSubmitModel = null;
 			btnEnterEvaluate = null;
+			btnEnterWorksLibrary = null;
+			LastMaterialSelect = null;
 			
 			mData = null;
 		}

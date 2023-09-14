@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Permissions;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class QuestionManager : SerializedMonoBehaviour
+public class QuestionManager : MonoBehaviour
 {
     /// <summary>
     /// 作者：王朕    时间：2023年7月11日
