@@ -7,113 +7,62 @@ using System.Threading;
 using System.Collections.Generic;
 using System;
 using ProjectBase;
+using TMPro;
 
 namespace ZGMSXY_MYCXGY
 {
     public class InteractionPanelData : UIPanelData
     {
-        public SelectMaterial.MaterialType MaterialType;
-        public SelectCase.CaseType CaseType;
     }
 
     public partial class InteractionPanel : UIPanel
     {
         List<GameObject> groups = new List<GameObject>();
         private CancellationTokenSource cts;
-        
 
         protected override void OnInit(IUIData uiData = null)
         {
-            InitGroups();
             cts = new CancellationTokenSource();
             mData = uiData as InteractionPanelData ?? new InteractionPanelData();
 
             btnBack.AddAwaitAction(async () =>
             {
-                await this.HideAsyncPanel();
-                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+                await this.HideAsync();
+                await UIKit.GetPanel<MainPanel>().ShowAsync();
             });
 
-            // btnCancelNext.AddAwaitAction(async () =>
-            // {
-            //     materialGroup.transform.DOLocalMoveY(-800, ExtensionFunction.ShowTime);
-            //     await imgNext.HideAsync();
-            //     materialGroup.gameObject.SetActive(false);
-            //     NextState();
-            //     GameManager.Instance.gameObject.SetActive(true);
-            //     UniTask.Void(async t =>
-            //     {
-            //         await GameManager.Instance.WaitClickCube();
-            //         imgPlayRealVideo.ShowAsync().Forget();
-            //     }, cts.Token);
-            // });
-            
-            btnConfirmNext.AddAwaitAction(async () =>await imgNext.HideAsync());
+            btnConfirmNext.AddAwaitAction(async () => await imgNext.HideAsync());
 
             btnConfirmPlayRealVideo.AddAwaitAction(async () =>
             {
                 await imgPlayRealVideo.HideAsync();
-                NextState();
                 vpRealVideo.gameObject.SetActive(true);
                 vpRealVideo.Play();
-                await UniTask.Yield(PlayerLoopTiming.Update);
-                UniTask.Void(async t =>
-                {
-                    await UniTask.WaitUntil(() => !vpRealVideo.isPlaying,
-                        cancellationToken: this.GetCancellationTokenOnDestroy());
-                    vpRealVideo.gameObject.SetActive(false);
-                    imgSubmitModel.ShowAsync().Forget();
-                }, this);
             });
 
             btnCancelPlayRealVideo.AddAwaitAction(async () =>
             {
                 await imgPlayRealVideo.HideAsync();
-                NextState();
                 await imgSubmitModel.ShowAsync();
             });
 
             btnConfirmSubmitModel.AddAwaitAction(async () =>
             {
-                await this.HideAsyncPanel();
-                await UIKit.GetPanel<EvaluatePanel>().ShowAsyncPanel();
+                await this.HideAsync();
+                await UIKit.GetPanel<EvaluatePanel>().ShowAsync();
             });
 
-            btnCancelSubmitModel.AddAwaitAction(async () =>
-            {
-                await imgSubmitModel.HideAsync();
-                btnEnterEvaluate.gameObject.SetActive(true);
-            });
-
-            btnEnterEvaluate.AddAwaitAction(async () =>
-            {
-                await imgSubmitModel.ShowAsync();
-                btnEnterEvaluate.gameObject.SetActive(false);
-            });
-
-            SubscribeUIElements();
+            btnCancelSubmitModel.AddAwaitAction(async () =>await imgSubmitModel.HideAsync());
         }
 
-        void SubscribeUIElements()
+        async UniTaskVoid SubscribeUIElements()
         {
-            SelectMaterial.OnConfirmMaterial += selectedMaterial =>
-            {
-                mData.MaterialType = selectedMaterial;
-                SelectCase.ShowAwaitUIElement();
-            };
-            SelectCase.OnConfirmCase += selectedCase =>
-            {
-                mData.CaseType = selectedCase;
-                toolSelections.ShowAwaitUIElement();
-                GameManager.Instance.StartTask(mData.MaterialType,mData.CaseType);
-            };
+            await SelectMaterial.btnConfirmMaterial.OnClickAsync();
+            await SelectCase.ShowAwait();
+            await SelectCase.btnConfirmMaterial.OnClickAsync();
+            GameManager.Instance.StartTask(SelectMaterial.nowMaterialType, SelectCase.nowCaseType);
         }
         
-        void InitGroups()
-        {
-            // groups.Add(materialGroup.gameObject);
-        }
-
         protected override void OnOpen(IUIData uiData = null)
         {
         }
@@ -127,16 +76,18 @@ namespace ZGMSXY_MYCXGY
             imgNext.HideSync();
             imgPlayRealVideo.HideSync();
             imgSubmitModel.HideSync();
-            btnEnterEvaluate.gameObject.SetActive(false);
+            btnEnterNext.gameObject.SetActive(false);
             SelectMaterial.ShowSync();
             SelectCase.HideSync();
             toolSelections.HideSync();
+            SubscribeUIElements().Forget();
         }
 
         protected override void OnHide()
         {
             UIKit.GetPanel<MainPanel>().imgBk.enabled = true;
             vpRealVideo.Stop();
+            GameManager.Instance.CancelTask?.Invoke();
             cts.Cancel();
         }
 
@@ -149,12 +100,62 @@ namespace ZGMSXY_MYCXGY
             taskSchedule.NextState();
         }
 
-        public async UniTask WaitNext()
+        public void InitTaskState(List<string> taskList)
+        {
+            taskSchedule.InitTaskState(taskList);
+        }
+
+        public void ShowFinishProduct()
+        {
+            ShowAsyncFinishProduct().Forget();
+        }
+
+        async UniTaskVoid ShowAsyncFinishProduct()
+        {
+            // UIKit.GetPanel<TopPanel>().tmpTip.text = "您可再次选择材料，以改变最终成品";
+            // await SelectMaterial.ShowAsync();
+            // await SelectMaterial.btnConfirmMaterial.OnClickAsync(cts.Token);
+
+            TextMeshProUGUI tmpTip = UIKit.GetPanel<TopPanel>().tmpTip;
+            tmpTip.text = "仿真动画播放完毕，点击右下角按钮进入下一步";
+            await toolSelections.HideAwait();
+            btnEnterNext.gameObject.SetActive(true);
+            await btnEnterNext.OnClickAsync(cts.Token);
+            await imgPlayRealVideo.ShowAwait();
+            int anyIndex = await UniTask.WhenAny(btnConfirmPlayRealVideo.OnClickAsync(cts.Token),
+                btnCancelPlayRealVideo.OnClickAsync(cts.Token));
+            if (anyIndex == 0)
+            {
+                tmpTip.text = "观看真人实操视频";
+                btnEnterNext.gameObject.SetActive(false);
+                await UniTask.Yield(cancellationToken:cts.Token);
+                await UniTask.WaitUntil(() => !vpRealVideo.isPlaying,
+                    cancellationToken: cts.Token);
+                btnEnterNext.gameObject.SetActive(true);
+                vpRealVideo.gameObject.SetActive(false);
+                await imgSubmitModel.ShowAsync();
+            }
+            tmpTip.text = "点击“是”或右下角按钮查看他人模型";
+            anyIndex = await UniTask.WhenAny(btnConfirmSubmitModel.OnClickAsync(cts.Token),btnCancelSubmitModel.OnClickAsync(cts.Token));
+            if (anyIndex == 0)
+            {
+                await this.HideAsync();
+                await UIKit.GetPanel<EvaluatePanel>().ShowAsync();
+            }
+            else
+            {
+                await btnEnterNext.OnClickAsync(cts.Token);
+                await this.HideAsync();
+                await UIKit.GetPanel<EvaluatePanel>().ShowAsync();
+            }
+        }
+
+        public async UniTask WaitNext(CancellationToken token)
         {
             UIRoot.Instance.GraphicRaycaster.enabled = false;
             await imgNext.ShowAsync();
             UIRoot.Instance.GraphicRaycaster.enabled = true;
-            await btnConfirmNext.OnClickAsync(cts.Token);
+            await btnConfirmNext.OnClickAsync(token);
         }
     }
 }

@@ -60,8 +60,8 @@ namespace ZGMSXY_MYCXGY
 			//选择工艺环节页面
 			btnBack.AddAwaitAction(async () =>
 			{
-				await this.HideAsyncPanel();
-				await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+				await this.HideAsync();
+				await UIKit.GetPanel<MainPanel>().ShowAsync();
 			});
 			for (int i = 0; i < craftRess.Count; i++)
 			{
@@ -85,8 +85,8 @@ namespace ZGMSXY_MYCXGY
 			}
 			btnConfirmCraft.AddAwaitAction(async () =>
 			{
-				await imgAnimation.ShowAsync();
 				GameManager.Instance.StartLearnAnimation(craftRess[selectedIndex].craftType);
+				await imgAnimation.ShowAsync();
 			});
 			//工艺动画页面
 			btnConfirmAnimation.AddAwaitAction(async () =>await imgAnimationEnd.ShowAsync());
@@ -136,8 +136,8 @@ namespace ZGMSXY_MYCXGY
 			btnCloseVideo.AddAwaitAction(async () =>
 			{
 				vpVideo.Stop();
-				await this.HideAsyncPanel();
-				await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+				await this.HideAsync();
+				await UIKit.GetPanel<MainPanel>().ShowAsync();
 			});
 		}
 
@@ -147,6 +147,8 @@ namespace ZGMSXY_MYCXGY
 
 		protected override void OnShow()
 		{
+			UIKit.GetPanel<TopPanel>().tmpTip.text = "通过三维动画学习各种工艺";
+			
 			objCraft.ShowSync();
 			imgAnimationEnd.HideSync();
 			titleGroup.HideSync();

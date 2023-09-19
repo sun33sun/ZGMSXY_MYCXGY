@@ -35,7 +35,7 @@ namespace ZGMSXY_MYCXGY
             {
                 Hide();
                 await UniTask.WaitUntil(() => !ButtonGroup.gameObject.activeInHierarchy);
-                await UIKit.GetPanel<PreviewPanel>().ShowAsyncPanel();
+                await UIKit.GetPanel<PreviewPanel>().ShowAsync();
             });
 
             btnKnowledge.AddAwaitAction(async () =>
@@ -43,14 +43,14 @@ namespace ZGMSXY_MYCXGY
                 await ButtonGroup.HideAsync();
                 await SecondButtonGroup.ShowAsync();
             });
-
+            
             btnMaterial.AddAwaitAction(async () =>
             {
                 Hide();
                 await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
                 KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
                 knowledgePanel.objMaterial.Show();
-                await knowledgePanel.ShowAsyncPanel();
+                await knowledgePanel.ShowAsync();
             });
 
             btnTool.AddAwaitAction(async () =>
@@ -59,28 +59,38 @@ namespace ZGMSXY_MYCXGY
                 await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
                 KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
                 knowledgePanel.objTool.Show();
-                await knowledgePanel.ShowAsyncPanel();
+                await knowledgePanel.ShowAsync();
             });
+            
+            btnCase.AddAwaitAction(async () =>
+            {
+                Hide();
+                await UniTask.WaitUntil(() => !SecondButtonGroup.gameObject.activeInHierarchy);
+                KnowledgePanel knowledgePanel = UIKit.GetPanel<KnowledgePanel>();
+                knowledgePanel.objCase.Show();
+                await knowledgePanel.ShowAsync();
+            });
+
 
             btnLearn.AddAwaitAction(async () =>
             {
                 Hide();
                 await UniTask.Delay(Settings.HideDelay);
-                await UIKit.GetPanel<LearnPanel>().ShowAsyncPanel();
+                await UIKit.GetPanel<LearnPanel>().ShowAsync();
             });
-
+            
             btninteraction.AddAwaitAction(async () =>
             {
                 Hide();
                 await UniTask.Delay(Settings.HideDelay);
-                await UIKit.GetPanel<InteractionPanel>().ShowAsyncPanel();
+                await UIKit.GetPanel<InteractionPanel>().ShowAsync();
             });
 
             btnReport.AddAwaitAction(async () =>
             {
                 Hide();
                 await UniTask.Delay(Settings.HideDelay);
-                await UIKit.GetPanel<ReportPanel>().ShowAsyncPanel();
+                await UIKit.GetPanel<ReportPanel>().ShowAsync();
             });
         }
 
@@ -90,6 +100,7 @@ namespace ZGMSXY_MYCXGY
 
         protected override void OnShow()
         {
+            UIKit.GetPanel<TopPanel>().tmpTip.text = "选择您要学习的模块";
         }
 
         protected override void OnHide()

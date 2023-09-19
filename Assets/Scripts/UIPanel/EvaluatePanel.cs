@@ -28,14 +28,8 @@ namespace ZGMSXY_MYCXGY
 
             btnBack.AddAwaitAction(async () =>
             {
-                await this.HideAsyncPanel();
-                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
-            });
-
-            btnNext.AddAwaitAction(async () =>
-            {
-                await svSelfEvaluate.HideAsync();
-                await OtherModel.ShowAsync();
+                await this.HideAsync();
+                await UIKit.GetPanel<MainPanel>().ShowAsync();
             });
 
             for (int i = 0; i < togOtherModels.Count; i++)
@@ -43,7 +37,7 @@ namespace ZGMSXY_MYCXGY
                 int index = i;
                 Image togImg = togOtherModels[i].GetComponent<Image>();
                 Image imgOtherModel = togOtherModels[i].transform.GetChild(0).GetComponent<Image>();
-                togOtherModels[i].AddAwaitAction(isOn =>
+                togOtherModels[i].onValueChanged.AddListener(isOn =>
                 {
                     if (isOn)
                     {
@@ -59,26 +53,12 @@ namespace ZGMSXY_MYCXGY
                     }
                 });
 
-                btnOtherModel_Selecteds[i].AddAwaitAction(async () =>
+                btnOtherModel_Selecteds[i].onClick.AddListener(async () =>
                 {
                     await OtherModel.HideAsync();
                     togOtherModels[index].isOn = false;
-                    btnEnterEvaluate.gameObject.SetActive(true);
                 });
             }
-
-            btnEnterEvaluate.AddAwaitAction(async () =>
-            {
-                svDoEvaluate.gameObject.SetActive(true);
-                await svDoEvaluate.DOLocalMoveY(-45, 0.5f).AsyncWaitForCompletion();
-                btnEnterEvaluate.gameObject.SetActive(false);
-            });
-
-            btnBackMain.AddAwaitAction(async () =>
-            {
-                await this.HideAsyncPanel();
-                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
-            });
         }
 
         protected override void OnOpen(IUIData uiData = null)
@@ -87,19 +67,13 @@ namespace ZGMSXY_MYCXGY
 
         protected override void OnShow()
         {
-            svSelfEvaluate.gameObject.SetActive(true);
-            svSelfEvaluate.localPosition = new Vector3(0, -45, 0);
-            OtherModel.gameObject.SetActive(false);
-            OtherModel.localPosition = new Vector3(0, 1080, 0);
-            svDoEvaluate.gameObject.SetActive(false);
-            svDoEvaluate.transform.localPosition = new Vector3(0, 1080, 0);
-            btnEnterEvaluate.gameObject.SetActive(false);
+            UIKit.GetPanel<TopPanel>().tmpTip.text = "查看实验评价";
+            
             for (int i = 0; i < togOtherModels.Count; i++)
             {
                 if(togOtherModels[i].isOn)
                     togOtherModels[i].isOn = false;
             }
-            transform.DOLocalMoveY(0, 0.5f);
         }
 
         protected override void OnHide()

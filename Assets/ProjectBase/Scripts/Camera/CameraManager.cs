@@ -107,6 +107,7 @@ namespace ProjectBase
             personViews.Add(new FirstPersonView(firstC.transform, pvField));
             personViews.Add(new ThirdPersonView(thirdC, pvField));
             personViews.Add(new RoundCamera(roundC, pvField));
+            personViews.Add(new FollowPersonView(followC,pvField));
             #endregion
         }
 
@@ -153,9 +154,6 @@ namespace ProjectBase
             isRotate = false;
         }
 
-        private Ray ray;
-        private RaycastHit hit;
-
         private void OnMouseSliding(Vector2 slidingValue)
         {
             if (!isRotate || !IsEnable)
@@ -183,6 +181,7 @@ namespace ProjectBase
             noneC.Priority = 10;
             firstC.Priority = 10;
             followC.Priority = 10;
+            roundC.Priority = 10;
             await UniTask.Delay(2000);
         }
 
@@ -193,8 +192,30 @@ namespace ProjectBase
             thirdC.Priority = 10;
             firstC.Priority = 10;
             followC.Priority = 10;
+            roundC.Priority = 10;
             await UniTask.Delay(2000);
         }
+
+        public void RoundPersonView(Transform target)
+        {
+            pvType = PersonViewType.RoundObject;
+            roundC.Follow = target;
+            roundC.Priority = 20;
+            noneC.Priority = 10;
+            firstC.Priority = 10;
+            followC.Priority = 10;
+        }
+
+        public void FollowPersonView(Transform target)
+        {
+            pvType = PersonViewType.FollowObject;
+            followC.Follow = target;
+            followC.Priority = 20;
+            roundC.Priority = 10;
+            noneC.Priority = 10;
+            firstC.Priority = 10;
+        }
+        
 
         #endregion
 

@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:1f96df6e-bacf-4925-a117-7d1fdd5e7726
+	// Generate Id:629de50e-8ec4-4a8d-83ee-da2efaab66f2
 	public partial class KnowledgePanel
 	{
 		public const string Name = "KnowledgePanel";
@@ -16,6 +16,8 @@ namespace ZGMSXY_MYCXGY
 		public ObjMaterial objMaterial;
 		[SerializeField]
 		public ObjTool objTool;
+		[SerializeField]
+		public ObjCase objCase;
 		
 		private KnowledgePanelData mPrivateData = null;
 		
@@ -24,6 +26,7 @@ namespace ZGMSXY_MYCXGY
 			btnBack = null;
 			objMaterial = null;
 			objTool = null;
+			objCase = null;
 			
 			mData = null;
 		}

@@ -79,16 +79,21 @@ namespace ZGMSXY_MYCXGY
 		public override void Show()
 		{
 			base.Show();
-			
+
 			principleGroup.ShowSync();
-			
+			togPrinciple.SetIsOnWithoutNotify(true);			
+
 			descriptionGroup.HideSync();
+			togDescription.SetIsOnWithoutNotify(false);
 
 			ageGroup.HideSync();
+			togAge.SetIsOnWithoutNotify(false);
 			
 			countryGroup.HideSync();
+			togCountry.SetIsOnWithoutNotify(false);
 
 			imgPlayEnd.gameObject.SetActive(false);
+			
 		}
 
 		protected override void OnBeforeDestroy()

@@ -18,9 +18,11 @@ namespace ZGMSXY_MYCXGY
 		{
 			c0,c1
 		}
-		[SerializeField] List<Toggle>  _toggles;
-		public Action<CaseType> OnConfirmCase;
-		public int selectedIndex = 0;
+
+		[SerializeField] private List<Toggle> _toggles;
+		private int selectedIndex = 0;
+		public CaseType nowCaseType => (CaseType)selectedIndex;
+		
 
 		private void Awake()
 		{
@@ -30,13 +32,12 @@ namespace ZGMSXY_MYCXGY
 				_toggles[i].AddAwaitAction(isOn =>
 				{
 					if(isOn)
-					selectedIndex = index;
+						selectedIndex = index;
 				});
 			}
 			btnConfirmMaterial.AddAwaitAction(async () =>
 			{
 				await this.HideAsync();
-				OnConfirmCase?.Invoke((CaseType)selectedIndex);
 			});
 		}
 

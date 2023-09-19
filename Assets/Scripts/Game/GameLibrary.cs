@@ -19,8 +19,7 @@ namespace ZGMSXY_MYCXGY
         {
             string strCraft = craftType.ToString();
             GameObject target = learnObjects.First(obj => obj.name == strCraft);
-            GameObject targetInstance = Instantiate(target, Vector3.zero, Quaternion.identity, ModelParent.transform);
-            targetInstance.transform.position = Vector3.zero;
+            GameObject targetInstance = Instantiate(target, ModelParent.transform,false);
             learnObjectInstanceDic.Add(craftType, targetInstance);
             return targetInstance;
         }

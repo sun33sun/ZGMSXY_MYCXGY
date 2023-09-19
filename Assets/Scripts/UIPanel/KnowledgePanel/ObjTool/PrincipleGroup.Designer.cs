@@ -10,13 +10,15 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class PrincipleGroup
 	{
-		[SerializeField] public UnityEngine.RectTransform hlgPrinciple;
-		[SerializeField] public UnityEngine.UI.Button btnToolDetail;
+		[SerializeField] public UnityEngine.UI.ScrollRect imgRightBk;
+		[SerializeField] public TMPro.TextMeshProUGUI tmpContent;
+		[SerializeField] public RectTransform vlgImage;
 
 		public void Clear()
 		{
-			hlgPrinciple = null;
-			btnToolDetail = null;
+			imgRightBk = null;
+			tmpContent = null;
+			vlgImage = null;
 		}
 
 		public override string ComponentName

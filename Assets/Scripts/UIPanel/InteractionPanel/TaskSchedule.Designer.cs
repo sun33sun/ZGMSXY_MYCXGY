@@ -10,9 +10,11 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class TaskSchedule
 	{
+		[SerializeField] public RectTransform TaskContent;
 
 		public void Clear()
 		{
+			TaskContent = null;
 		}
 
 		public override string ComponentName

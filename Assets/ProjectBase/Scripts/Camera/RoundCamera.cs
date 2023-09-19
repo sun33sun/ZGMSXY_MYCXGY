@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace ProjectBase
 {
-    public class RoundCamera : IPersonView
+    public class FollowPersonView : IPersonView
     {
         public Transform transform { get; set; }
         public PersonViewField PvField { get; set; }
         CinemachineVirtualCamera cam;
 
-        public RoundCamera(CinemachineVirtualCamera cam,PersonViewField pvf)
+        public FollowPersonView(CinemachineVirtualCamera cam,PersonViewField pvf)
         {
             this.cam = cam;
             transform = this.cam.transform;
@@ -24,9 +24,10 @@ namespace ProjectBase
 
         public void OnMouseSliding(Vector2 slidingValue)
         {
+            Vector3 euler = cam.transform.transform.localEulerAngles;
             cam.transform.rotation = Quaternion.AngleAxis(-slidingValue.y, cam.transform.right) *
                                      Quaternion.AngleAxis(slidingValue.x, cam.transform.up) * cam.transform.rotation;
-            Vector3 euler = cam.transform.transform.localEulerAngles;
+            euler = cam.transform.transform.localEulerAngles;
             if (euler.z != 0)
             {
                 euler.z = 0;
@@ -44,7 +45,7 @@ namespace ProjectBase
 
         public void OnMouseScrollWheel(float distance)
         {
-            cam.m_Lens.FieldOfView += distance * PvField.viewSpeed;
+            cam.m_Lens.FieldOfView -= distance * PvField.viewSpeed;
             if (cam.m_Lens.FieldOfView < 1)
                 cam.m_Lens.FieldOfView = 1;
             else if (cam.m_Lens.FieldOfView > 90)

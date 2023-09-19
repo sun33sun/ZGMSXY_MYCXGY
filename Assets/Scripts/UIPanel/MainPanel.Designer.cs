@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:fd363f3f-5263-45fa-9d8b-6b47150f1e7f
+	// Generate Id:09636454-64d1-4731-9481-b4dabd4f775c
 	public partial class MainPanel
 	{
 		public const string Name = "MainPanel";
@@ -34,6 +34,8 @@ namespace ZGMSXY_MYCXGY
 		public UnityEngine.UI.Button btnTool;
 		[SerializeField]
 		public UnityEngine.UI.Button btnMaterial;
+		[SerializeField]
+		public UnityEngine.UI.Button btnCase;
 		
 		private MainPanelData mPrivateData = null;
 		
@@ -51,6 +53,7 @@ namespace ZGMSXY_MYCXGY
 			SecondButtonGroup = null;
 			btnTool = null;
 			btnMaterial = null;
+			btnCase = null;
 			
 			mData = null;
 		}

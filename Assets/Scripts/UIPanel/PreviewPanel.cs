@@ -35,8 +35,8 @@ namespace ZGMSXY_MYCXGY
 
             btnBack.AddAwaitAction(async () =>
             {
-                await this.HideAsyncPanel();
-                await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();                
+                await this.HideAsync();
+                await UIKit.GetPanel<MainPanel>().ShowAsync();                
             });
 
             Func<UniTask> showFunc = imgRightBk.GetShowAsync(imgRightBk.transform.localPosition);
@@ -89,6 +89,8 @@ namespace ZGMSXY_MYCXGY
 
         protected override void OnShow()
         {
+            UIKit.GetPanel<TopPanel>().tmpTip.text = "通过文字与图片说明，了解实验目的、实验原理和实验内容";
+            
             togTarget.isOn = true;
             Reload(0);
             RebuildAsync().Forget();

@@ -23,8 +23,8 @@ namespace ZGMSXY_MYCXGY
 
 			btnBack.AddAwaitAction(async () =>
 			{
-				await this.HideAsyncPanel();
-				await UIKit.GetPanel<MainPanel>().ShowAsyncPanel();
+				await this.HideAsync();
+				await UIKit.GetPanel<MainPanel>().ShowAsync();
 			});
 			
 		}
@@ -34,6 +34,7 @@ namespace ZGMSXY_MYCXGY
 
 		protected override void OnShow()
 		{
+			UIKit.GetPanel<TopPanel>().tmpTip.text = "查看背景知识";
 		}
 
 		protected override void OnHide()
@@ -41,6 +42,7 @@ namespace ZGMSXY_MYCXGY
 			GameManager.Instance.gameObject.SetActive(false);
 			objMaterial.Hide();
 			objTool.Hide();
+			objCase.Hide();
 		}
 
 		protected override void OnClose()

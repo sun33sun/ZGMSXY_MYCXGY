@@ -20,12 +20,14 @@ MonoBehaviour:
     NameToFullName: []
     BindInfos: []
     ScriptsFolder: Assets/Scripts/Game
-    ClassName: TaskInteractive1
+    ClassName: GameLibrary
     Namespace: ZGMSXY_MYCXGY
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\nnamespace ZGMSXY_MYCXGY\r\n{\r\n\tpublic
-      partial class TaskInteractive1 : ViewController\r\n\t{\r\n\t\tvoid Start()\r\n\t\t{\r\n\t\t\t//
+      partial class GameLibrary : ViewController\r\n\t{\r\n\t\tvoid Start()\r\n\t\t{\r\n\t\t\t//
       Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:9d669237-87d0-461c-b04b-582fd10d4b8e\r\nusing UnityEngine;\r\n\r\nnamespace
-      ZGMSXY_MYCXGY\r\n{\r\n\tpublic partial class TaskInteractive1\r\n\t{\r\n\r\n\t\tpublic
-      UnityEngine.Animator Task1_DrawLine;\r\n\r\n\t\tpublic UnityEngine.Animator
-      Task1_Drilling;\r\n\r\n\t}\r\n}\r\n"
+    DesignerCode: "// Generate Id:7a04f27a-cef3-40e2-8f42-4f85598c4003\r\nusing UnityEngine;\r\n\r\nnamespace
+      ZGMSXY_MYCXGY\r\n{\r\n\tpublic partial class GameLibrary\r\n\t{\r\n\r\n\t\tpublic
+      UnityEngine.Light dir1;\r\n\r\n\t\tpublic UnityEngine.Light dir2;\r\n\r\n\t\tpublic
+      UnityEngine.GameObject GameMain;\r\n\r\n\t\tpublic UnityEngine.GameObject ModelParent;\r\n\r\n\t\tpublic
+      ZGMSXY_MYCXGY.TaskInteractive1 TaskInteractive1;\r\n\r\n\t\tpublic ZGMSXY_MYCXGY.TaskInteractive2
+      TaskInteractive2;\r\n\r\n\t}\r\n}\r\n"

@@ -8,6 +8,7 @@ using ProjectBase;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using UnityEngine.Serialization;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -20,8 +21,8 @@ namespace ZGMSXY_MYCXGY
             m2
         }
 
-        public Action<MaterialType> OnConfirmMaterial;
-
+        public MaterialType nowMaterialType => (MaterialType)selectedIndex;
+        
         [SerializeField] private List<Toggle> _toggles;
         private int selectedIndex = 0;
 
@@ -40,7 +41,6 @@ namespace ZGMSXY_MYCXGY
             btnConfirmMaterial.AddAwaitAction(async () =>
             {
                 await transform.HideAsync();
-                OnConfirmMaterial?.Invoke((MaterialType)selectedIndex);
             });
         }
 

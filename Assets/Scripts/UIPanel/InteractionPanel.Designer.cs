@@ -2,11 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
-using UnityEngine.Serialization;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:ae723b28-552c-46c0-8ea8-3689585ffbd7
+	// Generate Id:30d37d6e-1b48-489e-a254-c87eb8a2bb1b
 	public partial class InteractionPanel
 	{
 		public const string Name = "InteractionPanel";
@@ -16,19 +15,19 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField]
 		public UnityEngine.UI.Button btnBack;
 		[SerializeField]
+		public ToolSelections toolSelections;
+		[SerializeField]
 		public TaskSchedule taskSchedule;
 		[SerializeField]
 		public SelectMaterial SelectMaterial;
 		[SerializeField]
 		public SelectCase SelectCase;
-		[FormerlySerializedAs("MaterialDrilling")] [SerializeField]
-		public ToolSelections toolSelections;
 		[SerializeField]
 		public UnityEngine.RectTransform imgNext;
 		[SerializeField]
 		public UnityEngine.UI.Button btnConfirmNext;
 		[SerializeField]
-		public UnityEngine.UI.Button btnCancelNext;
+		public UnityEngine.UI.Button btnEnterNext;
 		[SerializeField]
 		public UnityEngine.RectTransform imgPlayRealVideo;
 		[SerializeField]
@@ -42,8 +41,6 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField]
 		public UnityEngine.UI.Button btnCancelSubmitModel;
 		[SerializeField]
-		public UnityEngine.UI.Button btnEnterEvaluate;
-		[SerializeField]
 		public UnityEngine.UI.Button btnEnterWorksLibrary;
 		[SerializeField]
 		public LastMaterialSelect LastMaterialSelect;
@@ -54,20 +51,19 @@ namespace ZGMSXY_MYCXGY
 		{
 			vpRealVideo = null;
 			btnBack = null;
+			toolSelections = null;
 			taskSchedule = null;
 			SelectMaterial = null;
 			SelectCase = null;
-			toolSelections = null;
 			imgNext = null;
 			btnConfirmNext = null;
-			btnCancelNext = null;
+			btnEnterNext = null;
 			imgPlayRealVideo = null;
 			btnConfirmPlayRealVideo = null;
 			btnCancelPlayRealVideo = null;
 			imgSubmitModel = null;
 			btnConfirmSubmitModel = null;
 			btnCancelSubmitModel = null;
-			btnEnterEvaluate = null;
 			btnEnterWorksLibrary = null;
 			LastMaterialSelect = null;
 			

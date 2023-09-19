@@ -196,13 +196,13 @@ namespace ProjectBase
             tog.onValueChanged.AddListener(asyncAction);
         }
 
-        public static async UniTask ShowAsyncPanel(this UIPanel panel)
+        public static async UniTask ShowAsync(this UIPanel panel)
         {
             panel.Show();
             await panel.transform.DOLocalMoveY(0, ShowTime).AsyncWaitForCompletion();
         }
 
-        public static async UniTask HideAsyncPanel(this UIPanel panel)
+        public static async UniTask HideAsync(this UIPanel panel)
         {
             await panel.transform.DOLocalMoveY(1080, ShowTime).AsyncWaitForCompletion();
             panel.Hide();
@@ -223,7 +223,21 @@ namespace ProjectBase
             await component.transform.DOLocalMoveY(0, ShowTime).AsyncWaitForCompletion();
         }
         
-        public static async void ShowAwaitUIElement(this UIElement uiElement)
+        public static async UniTask ShowAsync(this UIElement component)
+        {
+            component.Show();
+            await component.transform.DOLocalMoveY(0, ShowTime).AsyncWaitForCompletion();
+        }
+        
+        public static async UniTask ShowAwait(this Component component)
+        {
+            UIRoot.Instance.GraphicRaycaster.enabled = false;
+            component.gameObject.SetActive(true);
+            await component.transform.DOLocalMoveY(0, ShowTime).AsyncWaitForCompletion();
+            UIRoot.Instance.GraphicRaycaster.enabled = true;
+        }
+        
+        public static void ShowSync(this UIElement uiElement)
         {
             UIRoot.Instance.GraphicRaycaster.enabled = false;
             uiElement.gameObject.SetActive(true);
@@ -240,7 +254,21 @@ namespace ProjectBase
             component.gameObject.SetActive(false);
         }
 
-        public static async void HideAwaitUIElement(this UIElement uiElement)
+        public static async UniTask HideAsync(this UIElement component)
+        {
+            await component.transform.DOLocalMoveY(1080, HideTime).AsyncWaitForCompletion();
+            component.gameObject.Hide();
+        }
+        
+        public static async UniTask HideAwait(this Component component)
+        {
+            UIRoot.Instance.GraphicRaycaster.enabled = false;
+            await component.transform.DOLocalMoveY(1080, HideTime).AsyncWaitForCompletion();
+            component.gameObject.SetActive(false);
+            UIRoot.Instance.GraphicRaycaster.enabled = true;
+        }
+        
+        public static async void HideSync(this UIElement uiElement)
         {
             UIRoot.Instance.GraphicRaycaster.enabled = false;
             uiElement.transform.DOLocalMoveY(1080, HideTime).OnComplete(() =>
@@ -324,6 +352,14 @@ namespace ProjectBase
             await UniTask.WaitUntil(() => count == 0, cancellationToken: cancellationToken);
         }
 
+        #endregion
+
+        #region 查找
+
+        public static Transform FindByTag(this Transform parent, string tag)
+        {
+            return parent.GetComponentsInChildren<Transform>().FirstOrDefault(child => child.CompareTag(tag));
+        }
         #endregion
     }
 }

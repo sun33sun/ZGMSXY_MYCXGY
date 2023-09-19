@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 77766456095391548}
   - component: {fileID: 77766456095391551}
   - component: {fileID: 77766456095391550}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bit_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 77766456157864642}
   - component: {fileID: 77766456157864653}
   - component: {fileID: 77766456157864652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 77766456254681844}
   - component: {fileID: 77766456254682378}
   - component: {fileID: 77766456254681845}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 77766456343547952}
   - component: {fileID: 77766456343547958}
   - component: {fileID: 77766456343547953}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77766456367889964}
   - component: {fileID: 77766456367889965}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Task1_Drilling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 77766456370090498}
   - component: {fileID: 77766456370090496}
   - component: {fileID: 77766456370090499}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 77766456439080788}
   - component: {fileID: 77766456439080791}
   - component: {fileID: 77766456439080790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 77766456578972863}
   - component: {fileID: 77766456578972861}
   - component: {fileID: 77766456578972860}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 77766456627652125}
   - component: {fileID: 77766456627652115}
   - component: {fileID: 77766456627652114}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -747,7 +747,7 @@ GameObject:
   - component: {fileID: 77766456683393565}
   - component: {fileID: 77766456683393555}
   - component: {fileID: 77766456683393554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 77766456817837500}
   - component: {fileID: 77766456817837490}
   - component: {fileID: 77766456817837501}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 77766456904284653}
   - component: {fileID: 77766456904284643}
   - component: {fileID: 77766456904284642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 77766456922778155}
   - component: {fileID: 77766456922778153}
   - component: {fileID: 77766456922778152}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1061,9 +1061,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 77766456994005657}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wood
-  m_TagString: Untagged
+  m_TagString: RoundPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1103,7 +1103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 77766457069721749}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bit_Small_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1135,7 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77766457170695026}
   - component: {fileID: 77766457170695027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1267,7 +1267,7 @@ GameObject:
   - component: {fileID: 77766457471387989}
   - component: {fileID: 77766457471388011}
   - component: {fileID: 77766457471388010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1346,7 +1346,7 @@ GameObject:
   - component: {fileID: 77766457699342861}
   - component: {fileID: 77766457699342851}
   - component: {fileID: 77766457699342850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1424,7 +1424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77766457850183725}
   - component: {fileID: 77766457850183714}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: OutlineParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1569,7 +1569,7 @@ MonoBehaviour:
   seeThroughBorderColor: {r: 0, g: 0, b: 0, a: 1}
   seeThroughBorderWidth: 0.45
   seeThroughOrdered: 0
-  rmsCount: 3
+  rmsCount: 8
   hitFxInitialIntensity: 0
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25
@@ -1584,7 +1584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 77766457905318004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bit_Big_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1617,7 +1617,7 @@ GameObject:
   - component: {fileID: 77766457916088442}
   - component: {fileID: 77766457916088440}
   - component: {fileID: 77766457916088443}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1696,7 +1696,7 @@ GameObject:
   - component: {fileID: 77766457994641626}
   - component: {fileID: 77766457994641624}
   - component: {fileID: 77766457994641627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1775,7 +1775,7 @@ GameObject:
   - component: {fileID: 7880508953279728919}
   - component: {fileID: 574754888217425115}
   - component: {fileID: 5502619178175239680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zuanxichuang05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1854,7 +1854,7 @@ GameObject:
   - component: {fileID: 7427389884784895121}
   - component: {fileID: 8857885416633829055}
   - component: {fileID: 2303344301766688915}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: polySurface10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,7 +1933,7 @@ GameObject:
   - component: {fileID: 8600742331896145186}
   - component: {fileID: 8023669771992708398}
   - component: {fileID: 8000220149583785536}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2012,7 +2012,7 @@ GameObject:
   - component: {fileID: 7919423673254631621}
   - component: {fileID: 7597890794086809613}
   - component: {fileID: 1776795092242560646}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: polySurface12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2091,7 +2091,7 @@ GameObject:
   - component: {fileID: 7150282127482190578}
   - component: {fileID: 2024457992180169073}
   - component: {fileID: 241732580857350484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2172,7 +2172,7 @@ GameObject:
   - component: {fileID: 3583343441130577136}
   - component: {fileID: 3583343441130577143}
   - component: {fileID: 3583343441130577138}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: DebugDrawLine (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2280,7 +2280,7 @@ GameObject:
   - component: {fileID: 3583343441846094586}
   - component: {fileID: 3583343441846094589}
   - component: {fileID: 3583343441846094584}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: DebugDrawLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2384,7 +2384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4177385987952684285}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DrillingAndMillingMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2422,7 +2422,7 @@ GameObject:
   - component: {fileID: 5466451399081519196}
   - component: {fileID: 901333169603059105}
   - component: {fileID: 3493391790995472452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zuanxichuang03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2501,7 +2501,7 @@ GameObject:
   - component: {fileID: 6719923450417712145}
   - component: {fileID: 6408991018495494368}
   - component: {fileID: 9002801675933684652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zuanxichuang04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2580,7 +2580,7 @@ GameObject:
   - component: {fileID: 7744927121274560884}
   - component: {fileID: 5525949274579792868}
   - component: {fileID: 3292017752649078615}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2659,7 +2659,7 @@ GameObject:
   - component: {fileID: 1508107638261995897}
   - component: {fileID: 7151972122243330003}
   - component: {fileID: 7858936038816923693}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: polySurface11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2739,7 +2739,7 @@ GameObject:
   - component: {fileID: 8361398026580061903}
   - component: {fileID: 5173200642750274915}
   - component: {fileID: 5301635771010024198}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bit_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2838,7 +2838,7 @@ GameObject:
   - component: {fileID: 5753538465560764102}
   - component: {fileID: 5269660500222424947}
   - component: {fileID: 4452507131226304062}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zuanxichuang 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2917,7 +2917,7 @@ GameObject:
   - component: {fileID: 5692418052962736885}
   - component: {fileID: 5692418052962736887}
   - component: {fileID: 5692418052962736886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou07_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2996,7 +2996,7 @@ GameObject:
   - component: {fileID: 5692418053095840617}
   - component: {fileID: 5692418053095840619}
   - component: {fileID: 5692418053095840618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3075,7 +3075,7 @@ GameObject:
   - component: {fileID: 8084109407268194042}
   - component: {fileID: 62787239563795671}
   - component: {fileID: 393228466949298589}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3154,7 +3154,7 @@ GameObject:
   - component: {fileID: 7146065106174447869}
   - component: {fileID: 175330117719805089}
   - component: {fileID: 5478404450872164748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: zuanxichuang01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3231,7 +3231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5405720917262718003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Object004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3273,7 +3273,7 @@ GameObject:
   - component: {fileID: 8343771360034808707}
   - component: {fileID: 2464685307558494927}
   - component: {fileID: 7523214583446316534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3352,7 +3352,7 @@ GameObject:
   - component: {fileID: 3607814496958407217}
   - component: {fileID: 4633206497457762765}
   - component: {fileID: 1123203567917266922}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mutou07_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

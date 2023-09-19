@@ -24,7 +24,7 @@ namespace ZGMSXY_MYCXGY
 
 		private void Awake()
 		{
-			Func<Transform,UniTask> asLastShoAsync = GetAsLastShoAsync();
+			Func<Transform,UniTask> asLastShoAsync = GetAsLastShowAsync();
 
 			
 			
@@ -92,7 +92,6 @@ namespace ZGMSXY_MYCXGY
 			
 			btnCloseEntityDescription.AddAwaitAction(async ()=> await entityDescription.HideAsync());
 
-			
 			btnStartAnim.AddAwaitAction(() =>
 			{
 				if(vpAnimationGroup.isPlaying)
@@ -102,7 +101,7 @@ namespace ZGMSXY_MYCXGY
 			});
 		}
 		
-		Func<Transform,UniTask> GetAsLastShoAsync()
+		Func<Transform,UniTask> GetAsLastShowAsync()
 		{
 			return async t =>
 			{
@@ -117,12 +116,9 @@ namespace ZGMSXY_MYCXGY
 
 			vpAnimationGroup.ShowSync();
 			
-			// materialGroup.HideSync();
-			
 			materialDescription.HideSync();
 			
 			entityGroup.HideSync();
-			
 			entityDescription.HideSync();
 
 			togAnimation.isOn = true;

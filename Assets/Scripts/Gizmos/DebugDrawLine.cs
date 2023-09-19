@@ -12,11 +12,6 @@ public class DebugDrawLine : MonoBehaviour
     
     private void Update()
     {
-        // Ray _ray = new Ray(transform.position, this.transform.forward);
-        // Physics.Raycast(_ray, out _hit, 10);
-        
         Debug.DrawRay(transform.position, transform.forward * length, drawColor);
-        
-        // Debug.Log(_hit.point);
     }
 }
