@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
@@ -21,13 +22,13 @@ namespace ZGMSXY_MYCXGY
 
 		[SerializeField] List<Button> entityItems;
 		int nowEntityIndex = 0;
+		private string videoName = "TempVideo.mp4";
 
 		private void Awake()
 		{
+			vpAnimationGroup.url = Path.Combine(Application.streamingAssetsPath, videoName);
+			
 			Func<Transform,UniTask> asLastShoAsync = GetAsLastShowAsync();
-
-			
-			
 			//togMap
 			togMap.AddAwaitAction(async isOn =>
 			{

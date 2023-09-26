@@ -111,7 +111,7 @@ namespace ZGMSXY_MYCXGY
         {
         }
 
-        public override async void Show()
+        public override void Show()
         {
             base.Show();
             ButtonGroup.gameObject.SetActive(true);

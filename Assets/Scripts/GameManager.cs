@@ -33,13 +33,11 @@ namespace ZGMSXY_MYCXGY
             library.ModelParent.SetActive(true);
             GameObject targetInstance = library.GetLearnGameObject(craftType);
             CameraManager.Instance.nowC.Follow = targetInstance.transform;
-            CameraManager.Instance.SwitchRenderTexture(true);
         }
 
         public void EndLearnAnimation(CraftRes.CraftType craftType)
         {
             library.DestroyLearnGameObject(craftType);
-            CameraManager.Instance.SwitchRenderTexture(false);
         }
 
         private void OnDisable()

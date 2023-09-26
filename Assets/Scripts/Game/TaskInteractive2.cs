@@ -45,12 +45,10 @@ namespace ZGMSXY_MYCXGY
         {
             _library = library;
             _interactionPanel = UIKit.GetPanel<InteractionPanel>();
-            _interactionPanel.InitTaskState(taskList);            
+            _interactionPanel.InitTaskState(taskList);
             _toolSelections = _interactionPanel.toolSelections;
             _topPanel = UIKit.GetPanel<TopPanel>();
-            // DrawLine().Forget();
-            
-            FixAxleAndWheel().Forget();
+            DrawLine().Forget();
         }
 
         async UniTaskVoid DrawLine()
@@ -88,7 +86,8 @@ namespace ZGMSXY_MYCXGY
             _interactionPanel.NextState();
             System.GC.Collect();
             _topPanel.tmpTip.text = "交替使用钻头钻出安装车轮的缺口";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Bit_Fine, ToolSelections.Tool.Bit_Coarse,
+            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Bit_Fine,
+                ToolSelections.Tool.Bit_Coarse,
                 ToolSelections.Tool.DrillAndMillingMachine);
             Animator animatorDrilling = Instantiate(Task2_Drilling, transform, false);
             CameraManager.Instance.nowC.Follow = animatorDrilling.transform.FindByTag("RoundPoint");

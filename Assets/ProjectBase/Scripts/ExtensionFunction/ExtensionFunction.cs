@@ -268,7 +268,7 @@ namespace ProjectBase
             UIRoot.Instance.GraphicRaycaster.enabled = true;
         }
         
-        public static async void HideSync(this UIElement uiElement)
+        public static void HideSync(this UIElement uiElement)
         {
             UIRoot.Instance.GraphicRaycaster.enabled = false;
             uiElement.transform.DOLocalMoveY(1080, HideTime).OnComplete(() =>

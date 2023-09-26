@@ -24,14 +24,14 @@ namespace ProjectBase
 
         public void OnMouseSliding(Vector2 slidingValue)
         {
-            Vector3 euler = cam.transform.transform.localEulerAngles;
-            cam.transform.rotation = Quaternion.AngleAxis(-slidingValue.y, cam.transform.right) *
-                                     Quaternion.AngleAxis(slidingValue.x, cam.transform.up) * cam.transform.rotation;
-            euler = cam.transform.transform.localEulerAngles;
+            Vector3 euler = transform.localEulerAngles;
+            transform.rotation = Quaternion.AngleAxis(-slidingValue.y, transform.right) *
+                                 Quaternion.AngleAxis(slidingValue.x, transform.up) * transform.rotation;
+            euler = transform.localEulerAngles;
             if (euler.z != 0)
             {
                 euler.z = 0;
-                cam.transform.transform.localEulerAngles = euler;
+                transform.localEulerAngles = euler;
             }
         }
 

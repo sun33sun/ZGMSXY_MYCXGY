@@ -70,7 +70,6 @@ namespace ZGMSXY_MYCXGY
         protected override void OnShow()
         {
             UIKit.GetPanel<MainPanel>().imgBk.enabled = false;
-            CameraManager.Instance.SwitchRenderTexture(false);
             cts = new CancellationTokenSource();
             vpRealVideo.gameObject.SetActive(false);
             imgNext.HideSync();

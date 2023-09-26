@@ -111,14 +111,6 @@ namespace ProjectBase
             #endregion
         }
 
-        public void SwitchRenderTexture(bool isRender)
-        {
-            if (isRender)
-                mainC.targetTexture = rt;
-            else
-                mainC.targetTexture = null;                
-        }
-        
         #region 移动、上下移动、旋转、缩放视野
 
         void UpdateVelocity(Vector2 dir)

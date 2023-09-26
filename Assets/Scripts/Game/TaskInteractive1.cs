@@ -53,9 +53,7 @@ namespace ZGMSXY_MYCXGY
             _toolSelections = _interactionPanel.toolSelections;
             _topPanel = UIKit.GetPanel<TopPanel>();
             
-            // DrawLine().Forget();
-            
-            PolishCarInner().Forget();
+            DrawLine().Forget();
         }
 
         async UniTaskVoid DrawLine()

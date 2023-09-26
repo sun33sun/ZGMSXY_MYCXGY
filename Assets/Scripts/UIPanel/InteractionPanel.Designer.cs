@@ -5,11 +5,13 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:30d37d6e-1b48-489e-a254-c87eb8a2bb1b
+	// Generate Id:61d7327f-ed3c-427e-ae9f-fe4c2554016c
 	public partial class InteractionPanel
 	{
 		public const string Name = "InteractionPanel";
 		
+		[SerializeField]
+		public UnityEngine.UI.RawImage rawImageModel;
 		[SerializeField]
 		public UnityEngine.Video.VideoPlayer vpRealVideo;
 		[SerializeField]
@@ -49,6 +51,7 @@ namespace ZGMSXY_MYCXGY
 		
 		protected override void ClearUIComponents()
 		{
+			rawImageModel = null;
 			vpRealVideo = null;
 			btnBack = null;
 			toolSelections = null;
