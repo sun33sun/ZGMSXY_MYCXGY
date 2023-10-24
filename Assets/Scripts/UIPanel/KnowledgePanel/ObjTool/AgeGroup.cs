@@ -9,38 +9,17 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using QFramework;
+using ProjectBase;
 
 namespace ZGMSXY_MYCXGY
 {
 	public partial class AgeGroup : UIElement
 	{
+		[SerializeField] HorizontalSegmentation hsSelf;
 		[SerializeField] private List<RectTransform> ageItems;
 		int centerIndex;
 		private void Awake()
 		{
-			CancellationToken token = this.GetCancellationTokenOnDestroy();
-			float maxDistance = ((ageItems.Count - 1) / 2) * 620;
-			centerIndex = ageItems.Count / 2;
-			btnLeftAge.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnLeftAge, async () =>
-			{
-				float nowX = Content.anchoredPosition.x;
-				if (nowX > -maxDistance)
-				{
-					Content.DOAnchorPosX(nowX - 620, 0.1f);
-					centerIndex++;
-					await UniTask.Delay(Settings.smallDelay);
-				}
-			}, token));
-			btnRightAge.onClick.AddListener(Settings.GetButtonIgnoreClickFunc(btnRightAge, async () =>
-			{
-				float nowX = Content.anchoredPosition.x;
-				if (nowX < maxDistance)
-				{
-					Content.DOAnchorPosX(nowX + 620, 0.1f);
-					centerIndex--;
-					await UniTask.Delay(Settings.smallDelay);
-				}
-			}, token));
 		}
 
 		protected override void OnBeforeDestroy()
@@ -49,7 +28,13 @@ namespace ZGMSXY_MYCXGY
 
 		private void OnEnable()
 		{
-			Content.anchoredPosition = new Vector2(310, 0);
+			ResetState();
+		}
+
+		void ResetState()
+		{
+			centerIndex = hsSelf.Content.childCount / 2;
+			hsSelf.ResetState();
 		}
 	}
 }

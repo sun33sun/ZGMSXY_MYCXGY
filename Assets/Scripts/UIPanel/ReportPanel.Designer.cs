@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ZGMSXY_MYCXGY
 {
-	// Generate Id:014f8b81-0e78-448b-b249-abe9251e3aa2
+	// Generate Id:5cf82d11-4a21-41c5-9c75-67eb15c3eb43
 	public partial class ReportPanel
 	{
 		public const string Name = "ReportPanel";
@@ -14,6 +14,10 @@ namespace ZGMSXY_MYCXGY
 		public UnityEngine.UI.Button btnBack;
 		[SerializeField]
 		public UnityEngine.RectTransform svReport;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI tmpDate;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI tmpTotalScore;
 		[SerializeField]
 		public UnityEngine.UI.InputField inputTestEvaluate;
 		[SerializeField]
@@ -25,6 +29,8 @@ namespace ZGMSXY_MYCXGY
 		{
 			btnBack = null;
 			svReport = null;
+			tmpDate = null;
+			tmpTotalScore = null;
 			inputTestEvaluate = null;
 			btnSubmit = null;
 			

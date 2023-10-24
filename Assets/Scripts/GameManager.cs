@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Threading;
 using ProjectBase;
 using QFramework;
+using Cinemachine;
 
 namespace ZGMSXY_MYCXGY
 {
@@ -32,7 +33,9 @@ namespace ZGMSXY_MYCXGY
         {
             library.ModelParent.SetActive(true);
             GameObject targetInstance = library.GetLearnGameObject(craftType);
-            CameraManager.Instance.nowC.Follow = targetInstance.transform;
+            CinemachineVirtualCamera nowC = CameraManager.Instance.nowC;
+			nowC.Follow = targetInstance.transform;
+            nowC.m_Lens.FieldOfView = 60;
         }
 
         public void EndLearnAnimation(CraftRes.CraftType craftType)
@@ -57,18 +60,31 @@ namespace ZGMSXY_MYCXGY
                             TaskInteractive1 _taskInteractive1 = Instantiate(library.TaskInteractive1,
                                 library.ModelParent.transform, false);
                             _taskInteractive1.StartTask(library);
-                            cancelTask = () => Destroy(_taskInteractive1.gameObject);
+                            cancelTask = () =>
+                            {
+                                Destroy(_taskInteractive1.gameObject);
+                                library.ModelParent.SetActive(false);
+							};
                             break;
                         case SelectCase.CaseType.c1:
                             TaskInteractive2 _taskInteractive2 = Instantiate(library.TaskInteractive2,
                                 library.ModelParent.transform, false);
                             _taskInteractive2.StartTask(library);
-                            cancelTask = () => Destroy(_taskInteractive2.gameObject);
+                            cancelTask = () =>
+                            {
+                                Destroy(_taskInteractive2.gameObject);
+								library.ModelParent.SetActive(false);
+							};
                             break;
                     }
 
                     break;
             }
+        }
+
+        public void SetModelParent(bool isShow)
+        {
+            library.ModelParent.SetActive(isShow);
         }
     }
 }

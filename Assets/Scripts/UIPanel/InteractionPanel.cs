@@ -25,6 +25,8 @@ namespace ZGMSXY_MYCXGY
             cts = new CancellationTokenSource();
             mData = uiData as InteractionPanelData ?? new InteractionPanelData();
 
+            vpRealVideo.url = ExtensionFunction.VideoPath;
+
             btnBack.AddAwaitAction(async () =>
             {
                 await this.HideAsync();
@@ -87,7 +89,8 @@ namespace ZGMSXY_MYCXGY
             UIKit.GetPanel<MainPanel>().imgBk.enabled = true;
             vpRealVideo.Stop();
             GameManager.Instance.CancelTask?.Invoke();
-            cts.Cancel();
+
+			cts.Cancel();
         }
 
         protected override void OnClose()
@@ -111,11 +114,11 @@ namespace ZGMSXY_MYCXGY
 
         async UniTaskVoid ShowAsyncFinishProduct()
         {
-            // UIKit.GetPanel<TopPanel>().tmpTip.text = "您可再次选择材料，以改变最终成品";
-            // await SelectMaterial.ShowAsync();
-            // await SelectMaterial.btnConfirmMaterial.OnClickAsync(cts.Token);
+			// UIKit.GetPanel<TopPanel>().tmpTip.text = "您可再次选择材料，以改变最终成品";
+			// await SelectMaterial.ShowAsync();
+			// await SelectMaterial.btnConfirmMaterial.OnClickAsync(cts.Token);
 
-            TextMeshProUGUI tmpTip = UIKit.GetPanel<TopPanel>().tmpTip;
+			TextMeshProUGUI tmpTip = UIKit.GetPanel<TopPanel>().tmpTip;
             tmpTip.text = "仿真动画播放完毕，点击右下角按钮进入下一步";
             await toolSelections.HideAwait();
             btnEnterNext.gameObject.SetActive(true);

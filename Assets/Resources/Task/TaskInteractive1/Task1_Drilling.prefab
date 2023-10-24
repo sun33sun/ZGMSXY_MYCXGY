@@ -1063,7 +1063,7 @@ GameObject:
   - component: {fileID: 77766456994005657}
   m_Layer: 8
   m_Name: Wood
-  m_TagString: RoundPoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3275,7 +3275,7 @@ GameObject:
   - component: {fileID: 7523214583446316534}
   m_Layer: 8
   m_Name: mutou07
-  m_TagString: Untagged
+  m_TagString: RoundPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace ProjectBase
     {
         public static float HideTime = 0.5f;
         public static float ShowTime = 0.5f;
+
+        public static string VideoPath { get { return Path.Combine(Application.streamingAssetsPath, "TempVideo.mp4"); } }
         
         #region UI扩展
 

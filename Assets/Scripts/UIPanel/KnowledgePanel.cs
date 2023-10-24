@@ -15,8 +15,7 @@ namespace ZGMSXY_MYCXGY
 	}
 	public partial class KnowledgePanel : UIPanel
 	{
-		//[SerializeField] List<Toggle> togPrinciples;
-
+		private DateTime _startTime;
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as KnowledgePanelData ?? new KnowledgePanelData();
@@ -34,11 +33,21 @@ namespace ZGMSXY_MYCXGY
 
 		protected override void OnShow()
 		{
+			_startTime = DateTime.Now;
 			UIKit.GetPanel<TopPanel>().tmpTip.text = "查看背景知识";
 		}
 
 		protected override void OnHide()
 		{
+			ReportData data = new ReportData()
+			{
+				reportName = "工艺基础认知",
+				startTime = _startTime,
+				endTime =  DateTime.Now,
+				score = 1
+			};
+			UIKit.GetPanel<ReportPanel>().LoadReport(data);
+
 			GameManager.Instance.gameObject.SetActive(false);
 			objMaterial.Hide();
 			objTool.Hide();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -19,16 +20,19 @@ namespace ZGMSXY_MYCXGY
         private CancellationToken _token;
         private TopPanel _topPanel;
 
-        private List<string> taskList = new List<string>()
+        string strTag = "RoundPoint";
+
+
+		private List<string> taskList = new List<string>()
         {
-            "选择原料",
-            "模型标注",
-            "车身钻铣",
-            "车身切割",
-            "车轮制作",
-            "车轮打磨",
-            "部件安装",
-            "车身打磨"
+            TaskName.SelectMaterial.Description(),
+            TaskName.ModelMark.Description(),
+            TaskName.BodyDrill.Description(),
+            TaskName.ModelCut.Description(),
+            TaskName.WheelMaking.Description(),
+            TaskName.WheelPolish.Description(),
+            TaskName.PartInstall.Description(),
+            TaskName.BodyPolish.Description(),
         };
 
         private void Awake()
@@ -44,7 +48,7 @@ namespace ZGMSXY_MYCXGY
                 return info.IsName(stateName) && info.normalizedTime > 1;
             };
         }
-        
+
         public void StartTask(GameLibrary library)
         {
             _library = library;
@@ -52,19 +56,25 @@ namespace ZGMSXY_MYCXGY
             _interactionPanel.InitTaskState(taskList);
             _toolSelections = _interactionPanel.toolSelections;
             _topPanel = UIKit.GetPanel<TopPanel>();
-            
-            DrawLine().Forget();
+
+            CameraManager.Instance.nowC.m_Lens.FieldOfView = 60;
+            //DrawLine().Forget();
+
+            PolishCarInner().Forget();
         }
 
         async UniTaskVoid DrawLine()
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "使用尺子和笔在材料上画线";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Ruler, ToolSelections.Tool.Pencil);
+
+            ToolName[] tools = { ToolName.Ruler, ToolName.Pencil };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}在材料上画线";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);
+            
             Animator animatorDrawLine = Instantiate(Task1_DrawLine, transform, false);
             CameraManager.Instance.FollowPersonView(animatorDrawLine.transform);
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorDrawLine, "Measure2"),cancellationToken:_token);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorDrawLine, "Measure2"), cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorDrawLine.gameObject);
@@ -75,12 +85,14 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "交替使用钻头在车身画线处钻出容纳车轮的孔洞";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.DrillAndMillingMachine,
-                ToolSelections.Tool.Bit_Fine, ToolSelections.Tool.Bit_Coarse);
+
+            ToolName[] tools = { ToolName.DrillAndMillingMachine, ToolName.Bit_Fine, ToolName.Bit_Coarse };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}在车身画线处钻出容纳车轮的孔洞";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);
+            
             Animator animatorDrilling = Instantiate(Task1_Drilling, transform, false);
-            CameraManager.Instance.nowC.Follow = GameObject.FindWithTag("RoundPoint").transform;
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorDrilling, "Task1_Drilling4"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = GameObject.FindWithTag(strTag).transform;
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorDrilling, "Task1_Drilling4"), cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorDrilling.gameObject);
@@ -91,11 +103,14 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "使用带锯将多余部分切除";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Bandcut);
+            
+            ToolName[] tools = { ToolName.Bandcut };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}切除多余部分";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);            
+
             Animator animatorBandcut = Instantiate(Task1_Bandcut, transform, false);
-            CameraManager.Instance.nowC.Follow = animatorBandcut.transform.FindByTag("RoundPoint");
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorBandcut, "Task1_Bandcut"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = animatorBandcut.transform.FindByTag(strTag);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorBandcut, "Task1_Bandcut"), cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorBandcut.gameObject);
@@ -106,14 +121,18 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "使用打孔机和切割机制作车轮";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.DrillAndMillingMachine,
-                ToolSelections.Tool.Bandcut, ToolSelections.Tool.Bit_Fine);
+            
+            
+            ToolName[] tools = { ToolName.DrillAndMillingMachine, ToolName.Bandcut, ToolName.Bit_Fine };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}制作车轮";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);
+            
             Animator animatorAxleAndWheel = Instantiate(Task1_AxleAndWheel, transform, false);
-            CameraManager.Instance.nowC.Follow = animatorAxleAndWheel.transform.FindByTag("RoundPoint");
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorAxleAndWheel, "Task1_AxleAndWheel8"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = animatorAxleAndWheel.transform.FindByTag(strTag);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorAxleAndWheel, "Task1_AxleAndWheel8"),
+                cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
-            CameraManager.Instance.FollowPersonView(null);
+            CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorAxleAndWheel.gameObject);
             PolishWheel().Forget();
         }
@@ -122,11 +141,14 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "使用打磨机打磨车轮";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Sander);
+
+            ToolName[] tools = { ToolName.Sander };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}打磨车轮";
+            await _toolSelections.WaitSelectCorrectTool(_token,tools );
+            
             Animator animatorPolishWheel = Instantiate(Task1_PolishWheel, transform, false);
-            CameraManager.Instance.nowC.Follow = animatorPolishWheel.transform.FindByTag("RoundPoint");
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorPolishWheel, "Sander_Wheel4"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = animatorPolishWheel.transform.FindByTag(strTag);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorPolishWheel, "Sander_Wheel4"), cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorPolishWheel.gameObject);
@@ -137,14 +159,18 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "将车轴和车轮安装到车身上，然后打磨车身";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.Sander);
+
+            ToolName[] tools = { ToolName.Sander };
+            _topPanel.tmpTip.text = $"将车轴和车轮安装到车身上，然后使用{tools.Descriptions()}打磨车身";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);
+            
             Animator animatorFixWheelAndAxle = Instantiate(Task1_FixWheelAndAxle, transform, false);
-            CameraManager.Instance.nowC.Follow = animatorFixWheelAndAxle.transform.FindByTag("RoundPoint");
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorFixWheelAndAxle, "Task1_FixWheelAndAxle2"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = animatorFixWheelAndAxle.transform.FindByTag(strTag);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorFixWheelAndAxle, "Task1_FixWheelAndAxle2"),
+                cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
-            Destroy(animatorFixWheelAndAxle);
+            Destroy(animatorFixWheelAndAxle.gameObject);
             PolishCarInner().Forget();
         }
 
@@ -152,11 +178,15 @@ namespace ZGMSXY_MYCXGY
         {
             _interactionPanel.NextState();
             System.GC.Collect();
-            _topPanel.tmpTip.text = "使用打磨棒将车身内侧打磨光滑";
-            await _toolSelections.WaitSelectCorrectTool(_token, ToolSelections.Tool.SanderStick);
+
+            ToolName[] tools = { ToolName.SanderStick };
+            _topPanel.tmpTip.text = $"使用{tools.Descriptions()}将车身内侧打磨光滑";
+            await _toolSelections.WaitSelectCorrectTool(_token, tools);
+           
             Animator animatorPolishCarInner = Instantiate(Task1_PolishCarInner, transform, false);
-            CameraManager.Instance.nowC.Follow = animatorPolishCarInner.transform.FindByTag("RoundPoint");
-            await UniTask.WaitUntil(GetAnimEndFunc(animatorPolishCarInner, "Task1_PolishCarInner1"),cancellationToken:_token);
+            CameraManager.Instance.nowC.Follow = animatorPolishCarInner.transform.FindByTag(strTag);
+            await UniTask.WaitUntil(GetAnimEndFunc(animatorPolishCarInner, "Task1_PolishCarInner1"),
+                cancellationToken: _token);
             await _interactionPanel.WaitNext(_token);
             CameraManager.Instance.nowC.Follow = null;
             Destroy(animatorPolishCarInner.gameObject);

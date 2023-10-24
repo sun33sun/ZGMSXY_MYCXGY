@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using QFramework;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,18 +22,22 @@ public class ExecuteFind : Editor
         //获取所有子物体
         GameObject parent = UnityEditor.Selection.gameObjects[0];
         //获取Hierarchy窗口的所有物体
-        List<Transform> childs = new List<Transform>();
-        GetChildrens(parent.transform, childs);
+        // List<Transform> childs = new List<Transform>();
+        // GetChildrens(parent.transform, childs);
         
         //获取所有子物体
         // Transform[] childs = Resources.FindObjectsOfTypeAll<Transform>();
 
-        foreach (var child in childs)
+
+        List<Transform> childs = new List<Transform>();
+        GetChildrens(parent.transform, childs);
+        for (int i = 0; i < childs.Count; i++)
         {
-            if (child.tag == "RoundPoint")
+            Transform child = childs[i];
+            if (child.CompareTag("RoundPoint"))
             {
-                Debug.Log($"{child.name}是RoundPoint");
                 EditorGUIUtility.PingObject(child);
+                Debug.Log(child.name);
             }
         }
     }

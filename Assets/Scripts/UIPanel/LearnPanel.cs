@@ -52,10 +52,17 @@ namespace ZGMSXY_MYCXGY
 		[SerializeField] private List<CraftRes> craftRess;
 		
 		private int selectedIndex = 0;
-		
+
+		private List<int> scores = new List<int>()
+		{
+			0, 0, 0, 0, 0, 0, 0, 0
+		};//数量与CraftType的枚举数相等
+
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as LearnPanelData ?? new LearnPanelData();
+
+			vpVideo.url = ExtensionFunction.VideoPath;
 
 			//选择工艺环节页面
 			btnBack.AddAwaitAction(async () =>
@@ -73,7 +80,7 @@ namespace ZGMSXY_MYCXGY
 					{
 						selectedIndex = index;
 						rect.sizeDelta = bigSize;
-						tmpCraftName.text = "木材的" + craftRess[index].craftType.GetDescription();
+						tmpCraftName.text = "木材的" + craftRess[index].craftType.Description();
 						tmpCraftDescription.text = craftRess[index].description;
 					}
 					else
@@ -137,7 +144,7 @@ namespace ZGMSXY_MYCXGY
 			{
 				vpVideo.Stop();
 				await this.HideAsync();
-				await UIKit.GetPanel<MainPanel>().ShowAsync();
+				await this.ShowAsync();
 			});
 		}
 
@@ -162,7 +169,7 @@ namespace ZGMSXY_MYCXGY
 					craftItem.tog.isOn = false;
 			}
 			craftRess[0].tog.isOn = true;
-			tmpCraftName.text = "木材的"+craftRess[0].craftType.GetDescription();
+			tmpCraftName.text = "木材的"+craftRess[0].craftType.Description();
 			tmpCraftDescription.text = craftRess[0].description;
 			//资源状态重置
 			selectedIndex = 0;

@@ -61,7 +61,7 @@ namespace ZGMSXY_MYCXGY
 			{
 				if (isOn)
 				{
-					togCountry.transform.SetAsLastSibling();
+					countryGroup.transform.SetAsLastSibling();
 					await countryGroup.ShowAsync();
 				}
 				else

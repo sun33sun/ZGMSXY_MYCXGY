@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
- * 2023.9 ADMIN-20230222V
+ * 2023.10 ADMIN-20230222V
  ****************************************************************************/
 
 using UnityEngine;
@@ -10,13 +10,11 @@ namespace ZGMSXY_MYCXGY
 {
 	public partial class DescriptionGroup
 	{
-		[SerializeField] public RectTransform Content;
 		[SerializeField] public UnityEngine.UI.Button btnRightDescription;
 		[SerializeField] public UnityEngine.UI.Button btnLeftDescription;
 
 		public void Clear()
 		{
-			Content = null;
 			btnRightDescription = null;
 			btnLeftDescription = null;
 		}

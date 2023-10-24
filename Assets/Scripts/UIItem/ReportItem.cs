@@ -16,15 +16,14 @@ namespace ZGMSXY_MYCXGY
 
     public class ReportItem : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI tmpName;
-        [SerializeField] private TextMeshProUGUI tmpStartTime;
-        [SerializeField] private TextMeshProUGUI tmpEndTime;
-        [SerializeField] private TextMeshProUGUI tmpTotalTime;
-        [SerializeField] private TextMeshProUGUI tmpScore;
+        [SerializeField] public TextMeshProUGUI tmpName;
+        [SerializeField] public TextMeshProUGUI tmpStartTime;
+        [SerializeField] public TextMeshProUGUI tmpEndTime;
+        [SerializeField] public TextMeshProUGUI tmpTotalTime;
+        [SerializeField] public TextMeshProUGUI tmpScore;
 
         public void LoadData(ReportData data)
         {
-            tmpName.text = data.reportName;
             tmpStartTime.text = data.startTime.ToString("MM-dd HH:mm");
             tmpEndTime.text = data.endTime.ToString("MM-dd HH:mm");
             tmpTotalTime.text = (data.endTime - data.startTime).ToString("m'm's's'");

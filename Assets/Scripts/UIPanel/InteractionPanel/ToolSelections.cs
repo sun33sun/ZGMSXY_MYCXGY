@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -16,40 +17,49 @@ using UnityEngine.Serialization;
 
 namespace ZGMSXY_MYCXGY
 {
+    public enum ToolName
+    {
+        [Description("尺子")]
+        Ruler,
+        [Description("笔")]
+        Pencil,
+        [Description("钻铣床")]
+        DrillAndMillingMachine,
+        [Description("细头钻")]
+        Bit_Fine,
+        [Description("粗头钻")]
+        Bit_Coarse,
+        [Description("带锯")]
+        Bandcut,
+        [Description("打磨机")]
+        Sander,
+        [Description("细锉刀")]
+        File_File,
+        [Description("粗锉刀")]
+        File_Coarse,
+        [Description("打磨棒")]
+        SanderStick
+    }
     public partial class ToolSelections : UIElement
     {
-        public enum Tool
-        {
-            Ruler,
-            Pencil,
-            DrillAndMillingMachine,
-            Bit_Fine,
-            Bit_Coarse,
-            Bandcut,
-            Sander,
-            File_File,
-            File_Coarse,
-            SanderStick
-        }
-
         public List<Toggle> _toggles;
         public List<GameObject> _selectedObjs;
 
-        private Dictionary<Tool, int> canClickDic = new Dictionary<Tool, int>()
+        private Dictionary<ToolName, int> canClickDic = new Dictionary<ToolName, int>()
         {
-            { Tool.Ruler, 2 },
-            { Tool.Pencil, 2 },
-            { Tool.DrillAndMillingMachine, 4 },
-            { Tool.Bit_Fine, 4 },
-            { Tool.Bit_Coarse, 2 },
-            { Tool.Bandcut, 5 },
-            { Tool.Sander, 3 },
-            { Tool.File_File, 1 },
-            { Tool.File_Coarse, 1 },
-            { Tool.SanderStick, 2 }
+            { ToolName.Ruler, 2 },
+            { ToolName.Pencil, 2 },
+            { ToolName.DrillAndMillingMachine, 4 },
+            { ToolName.Bit_Fine, 4 },
+            { ToolName.Bit_Coarse, 2 },
+            { ToolName.Bandcut, 5 },
+            { ToolName.Sander, 3 },
+            { ToolName.File_File, 1 },
+            { ToolName.File_Coarse, 1 },
+            { ToolName.SanderStick, 2 }
         };
 
-        public Dictionary<Tool, int> clickDic = new Dictionary<Tool, int>();
+        public Dictionary<ToolName, int> clickDic = new Dictionary<ToolName, int>();
         private CancellationToken _tokenDestroy;
 
         private void Awake()
@@ -59,23 +69,6 @@ namespace ZGMSXY_MYCXGY
             foreach (var VARIABLE in canClickDic)
                 clickDic[VARIABLE.Key] = VARIABLE.Value;
 
-            float maxDistance = ((_toggles.Count - 5) / 2) * 140;
-            btnLeftTool.AddAwaitAction(async () =>
-            {
-                float nowX = Content.localPosition.x;
-                if (nowX < maxDistance)
-                {
-                    await Content.DOLocalMoveX(nowX + 140, 0.1f).AsyncWaitForCompletion();
-                }
-            });
-            btnRightTool.AddAwaitAction(async () =>
-            {
-                float nowX = Content.localPosition.x;
-                if (nowX > -maxDistance)
-                {
-                    await Content.DOLocalMoveX(nowX - 140, 0.1f).AsyncWaitForCompletion();
-                }
-            });
             for (int i = 0; i < _toggles.Count; i++)
             {
                 int index = i;
@@ -94,7 +87,7 @@ namespace ZGMSXY_MYCXGY
         public override void Show()
         {
             base.Show();
-            Content.transform.localPosition = new Vector3(75, 0, 0);
+            hsTool.ResetState();
             _selectedObjs.ForEach(obj => obj.SetActive(false));
         }
 
@@ -113,22 +106,25 @@ namespace ZGMSXY_MYCXGY
 
         async UniTask ResetToolState()
         {
-            _selectedObjs.ForEach(obj => obj.SetActive(false));
+			_selectedObjs.ForEach(obj => obj.SetActive(false));
             foreach (Toggle toggle in _toggles)
             {
                 toggle.isOn = false;
             }
-            await SelectedTool.HideAwait();
+			await SelectedTool.HideAwait();
         }
 
 
-        public async UniTask WaitSelectCorrectTool(CancellationToken token, params Tool[] keyList)
+        public async UniTask WaitSelectCorrectTool(CancellationToken token, params ToolName[] keyList)
         {
             if (_tokenDestroy.IsCancellationRequested || keyList == null || keyList.Length == 0)
                 return;
             SelectedTool.ShowSync();
             await this.ShowAsync();
-            
+
+            //_toogles全部可交互
+            _toggles.ForEach(tog => tog.interactable = true);
+
             List<Toggle> nowToggles = new List<Toggle>();
             foreach (var VARIABLE in keyList.Select(key => (int)key))
             {
@@ -143,10 +139,19 @@ namespace ZGMSXY_MYCXGY
             {
                 await btnConfirmTool.OnClickAsync(token);
                 if (nowToggles.All(tog => tog.isOn) && _toggles.FindAll(tog => tog.isOn).Count == nowToggles.Count)
-                    break;
+                {
+                    tmpRightTip.gameObject.SetActive(false);
+					break;
+				}
+				else
+                {
+                    tmpRightTip.gameObject.SetActive(true);
+                    tmpRightTip.text = $"选择错误！正确答案为：{keyList.Descriptions()}";
+                }
             }
-            
-            await ResetToolState();
+
+			_toggles.ForEach(tog => tog.interactable = false);
+			await ResetToolState();
             foreach (var key in keyList)
             {
                 clickDic[key] -= 1;
